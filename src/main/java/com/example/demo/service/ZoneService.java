@@ -1,3 +1,6 @@
+package com.example.demo.service;
+
+
 public interface ZoneService {
 
     Zone createZone(Zone zone);

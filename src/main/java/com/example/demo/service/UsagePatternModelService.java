@@ -1,3 +1,7 @@
+package com.example.demo.service;
+
+
+
 public interface UsagePatternModelService {
 
     UsagePatternModel createModel(UsagePatternModel model);

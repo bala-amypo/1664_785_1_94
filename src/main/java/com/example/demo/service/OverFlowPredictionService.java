@@ -1,3 +1,7 @@
+package com.example.demo.service;
+
+
+
 public interface OverflowPredictionService {
 
     OverflowPrediction generatePrediction(Long binId);

@@ -1,8 +1,9 @@
 package com.example.demo.model;
 
 import jakarta.persistence.Entity;
-import jarkarta.persistence.Id;
-import jarkarta.persistence.Gener
+import jakarta.persistence.Id;
+import jakarta.persistence.Generatedvalue;
+import jakarta.persistence.ManyToOne;
 
 
 @Entity

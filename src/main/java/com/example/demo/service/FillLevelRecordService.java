@@ -1,3 +1,7 @@
+package
+
+
+
 public interface FillLevelRecordService {
 
     FillRecord createRecord(FillRecord record);

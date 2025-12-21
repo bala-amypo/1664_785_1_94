@@ -1,3 +1,7 @@
+package com.example.demo.servie;
+
+
+
 public interface BinService {
 
     Bin createBin(Bin bin);

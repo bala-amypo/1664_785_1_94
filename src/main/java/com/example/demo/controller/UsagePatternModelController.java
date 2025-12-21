@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.Tag;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api/models")
-@Tag(name = "Usage Pattern Models")
+
 public class UsagePatternModelController {
 
     private final UsagePatternModelService usagePatternModelService;
@@ -21,7 +21,7 @@ public class UsagePatternModelController {
     }
 
     @PostMapping
-    public UsagePatternModel createModel(@RequestBody UsagePatternModel model) {
+    public UsagePatternModelConroller createModel(@RequestBody UsagePatternModel model) {
         return usagePatternModelService.createModel(model);
     }
 

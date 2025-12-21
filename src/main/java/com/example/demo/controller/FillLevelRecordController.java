@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/fill-records")
-@Tag(name = "Fill Level Records")
 public class FillLevelRecordController {
 
     private final FillLevelRecordService fillLevelRecordService;

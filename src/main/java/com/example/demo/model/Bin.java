@@ -16,5 +16,9 @@ public class Bin{
     private Double latitude;
     private String LocationDescription;
     private Double Longitude;
-    private Ma
+    private ManyToOne Zone Zone;
+    private Double CapacityLiters;
+    private Boolean Active;
+    private Timestamp CreatedAt;
+    private TimeStamp UpdatedAt;
 }

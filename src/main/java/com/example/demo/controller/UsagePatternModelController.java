@@ -1,46 +1,63 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import com.example.demo.service.UsagePatternModelService;
 import com.example.demo.model.UsagePatternModel;
-import com.example.demo.model.UsagePatternBindId;-
+import com.example.demo.service.UsagePatternModelService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/models")
-
+@RequestMapping("/api/usage-pattern-models")
 public class UsagePatternModelController {
 
     private final UsagePatternModelService usagePatternModelService;
 
+    // ✅ Constructor Injection (MANDATORY for your test suite)
     public UsagePatternModelController(UsagePatternModelService usagePatternModelService) {
         this.usagePatternModelService = usagePatternModelService;
     }
 
+    // ---------------- CREATE ----------------
     @PostMapping
-    public UsagePatternModelConroller createModel(@RequestBody UsagePatternModel model) {
-        return usagePatternModelService.createModel(model);
+    public ResponseEntity<UsagePatternModel> createModel(
+            @RequestBody UsagePatternModel model) {
+
+        UsagePatternModel savedModel =
+                usagePatternModelService.createModel(model);
+
+        return new ResponseEntity<>(savedModel, HttpStatus.CREATED);
     }
 
+    // ---------------- UPDATE ----------------
     @PutMapping("/{id}")
-    public UsagePatternModel updateModel(
+    public ResponseEntity<UsagePatternModel> updateModel(
             @PathVariable Long id,
-            @RequestBody UsagePatternModel model
-    ) {
-        return usagePatternModelService.updateModel(id, model);
+            @RequestBody UsagePatternModel model) {
+
+        UsagePatternModel updatedModel =
+                usagePatternModelService.updateModel(id, model);
+
+        return ResponseEntity.ok(updatedModel);
     }
 
+    // ---------------- GET MODEL FOR BIN ----------------
     @GetMapping("/bin/{binId}")
-    public UsagePatternModel getModelForBin(@PathVariable Long binId) {
-        return usagePatternModelService.getModelForBin(binId);
+    public ResponseEntity<UsagePatternModel> getModelForBin(
+            @PathVariable Long binId) {
+
+        UsagePatternModel model =
+                usagePatternModelService.getModelForBin(binId);
+
+        return ResponseEntity.ok(model);
     }
 
+    // ---------------- GET ALL MODELS ----------------
     @GetMapping
-    public List<UsagePatternModel> getAllModels() {
-        return usagePatternModelService.getAllModels();
+    public ResponseEntity<List<UsagePatternModel>> getAllModels() {
+        return ResponseEntity.ok(
+                usagePatternModelService.getAllModels()
+        );
     }
 }

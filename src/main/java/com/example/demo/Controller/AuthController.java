@@ -16,16 +16,16 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public User register(
+    public UserService register(
             @RequestParam String fullName,
             @RequestParam String email,
-            @RequestParam String password
+            @RequestParam String password,
     ) {
         return userService.registerUser(fullName, email, password);
     }
 
     @PostMapping("/login")
-    public User login(@RequestParam String email) {
+    public UserService login(@RequestParam String email) {
         return userService.getByEmail(email);
     }
 }

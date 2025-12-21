@@ -20,17 +20,17 @@ public class BinController {
     }
 
     @PostMapping
-    public Bin createBin(@RequestBody Bin bin) {
+    public BinController createBin(@RequestBody Bin bin) {
         return binService.createBin(bin);
     }
 
     @PutMapping("/{id}")
-    public Bin updateBin(@PathVariable Long id, @RequestBody Bin bin) {
+    public BinController updateBin(@PathVariable Long id, @RequestBody Bin bin) {
         return binService.updateBin(id, bin);
     }
 
     @GetMapping("/{id}")
-    public Bin getBin(@PathVariable Long id) {
+    public BinController getBin(@PathVariable Long id) {
         return binService.getBinById(id);
     }
 

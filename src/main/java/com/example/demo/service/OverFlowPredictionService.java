@@ -2,9 +2,9 @@ package com.example.demo.service;
 
 
 
-public interface OverflowPredictionService {
+public interface OverFlowPredictionService {
 
-    OverflowPrediction generatePrediction(Long binId);
+    OverFlowPrediction generatePrediction(Long binId);
 
     OverflowPrediction getPredictionById(Long id);
 

@@ -1,31 +1,28 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.model.Bin;
 import com.example.demo.service.BinService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/bins")
+@RequestMapping("/api/bins")
 public class BinController {
 
-    @Autowired
-    private BinService binService;
+    private final BinService binService;
+
+    public BinController(BinService binService) {
+        this.binService = binService;
+    }
 
     @PostMapping
-    public Bin createBin(@RequestBody Bin bin) {
-        return binService.saveBin(bin);
+    public Bin create(@RequestBody Bin bin) {
+        return binService.createBin(bin);
     }
 
     @GetMapping
-    public List<Bin> getAllBins() {
+    public List<Bin> getAll() {
         return binService.getAllBins();
     }
 }

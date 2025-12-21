@@ -1,3 +1,10 @@
 package com.example.demo.model;
 
-public 
+import jakaEntity;
+
+
+@Entity
+public class Bin{
+    private Long id;
+    private String identifier
+}

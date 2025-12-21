@@ -8,31 +8,32 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/fill-records")
+
 public class FillLevelRecordController {
 
-    private final FillLevelRecordService fillLevelRecordService;
+    private final FillLevelRecordService FillLevelRecordService;
 
-    public FillLevelRecordController(FillLevelRecordService fillLevelRecordService) {
-        this.fillLevelRecordService = fillLevelRecordService;
+    public FillLevelRecordController(FillLevelRecordService FillLevelRecordService) {
+        this.FillLevelRecordService = FillLevelRecordService;
     }
 
     @PostMapping
-    public FillRecord createRecord(@RequestBody FillRecord record) {
-        return fillLevelRecordService.createRecord(record);
+    public FillRecord createRecord(@RequestBody FillRecordService record) {
+        return FillLevelRecordService.createRecord(record);
     }
 
     @GetMapping("/{id}")
     public FillRecord getRecord(@PathVariable Long id) {
-        return fillLevelRecordService.getRecordById(id);
+        return FillLevelRecordService.getRecordById(id);
     }
 
     @GetMapping("/bin/{binId}")
-    public List<FillRecord> getRecordsForBin(@PathVariable Long binId) {
-        return fillLevelRecordService.getRecordsForBin(binId);
+    public List<FillLevelRecord> getRecordsForBin(@PathVariable Long binId) {
+        return FillLevelRecordService.getRecordsForBin(binId);
     }
 
     @GetMapping("/bin/{binId}/recent")
-    public List<FillRecord> getRecentRecords(
+    public List<FillLevelRecord> getRecentRecords(
             @PathVariable Long binId,
             @RequestParam int limit
     ) {

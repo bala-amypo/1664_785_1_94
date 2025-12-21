@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import com.example.demo.
 
 
 
@@ -27,7 +28,7 @@ public class UsagePatternModelController {
     @PutMapping("/{id}")
     public UsagePatternModel updateModel(
             @PathVariable Long id,
-            @RequestBody UsagePatternModel model,
+            @RequestBody UsagePatternModel model
     ) {
         return usagePatternModelService.updateModel(id, model);
     }

@@ -1,5 +1,9 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Entity;
+import jarkarta.persistence.Id;
+import jarkarta.persistence.Gener
+
 
 @Entity
 public class FillLevelRecord {

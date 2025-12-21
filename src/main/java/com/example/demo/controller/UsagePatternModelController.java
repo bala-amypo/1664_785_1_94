@@ -28,7 +28,7 @@ public class UsagePatternModelController {
     @PutMapping("/{id}")
     public UsagePatternModel updateModel(
             @PathVariable Long id,
-            @RequestBody UsagePatternModel model
+            @RequestBody UsagePatternModel model,
     ) {
         return usagePatternModelService.updateModel(id, model);
     }

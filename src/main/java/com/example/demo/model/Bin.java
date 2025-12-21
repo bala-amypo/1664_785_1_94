@@ -14,4 +14,7 @@ public class Bin{
     @Column(unique=true)
     private String identifier;
     private Double latitude;
+    private String LocationDescription;
+    private Double Longitude;
+    private Ma
 }

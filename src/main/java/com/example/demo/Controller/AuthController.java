@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Tag(name = "Authentication")
 public class AuthController {
 
-    private final UserService userService;
+    private final UserService UserService;
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
+    public AuthController(UserService UserService) {
+        this.UserService = UserService;
     }
 
     @PostMapping("/register")

@@ -15,27 +15,27 @@ public class OverFlowPredictionController {
 
     private final OverFlowPredictionService overflowPredictionService;
 
-    public OverFlowPredictionController(OverflowPredictionService overflowPredictionService) {
+    public OverFlowPredictionController(OverFlowPredictionService overflowPredictionService) {
         this.overflowPredictionService = overflowPredictionService;
     }
 
     @PostMapping("/generate/{binId}")
-    public OverflowPrediction generatePrediction(@PathVariable Long binId) {
+    public OverFlowPrediction generatePrediction(@PathVariable Long binId) {
         return overflowPredictionService.generatePrediction(binId);
     }
 
     @GetMapping("/{id}")
-    public OverflowPrediction getPrediction(@PathVariable Long id) {
+    public OverFlowPrediction getPrediction(@PathVariable Long id) {
         return overflowPredictionService.getPredictionById(id);
     }
 
     @GetMapping("/bin/{binId}")
-    public List<OverflowPrediction> getPredictionsForBin(@PathVariable Long binId) {
+    public List<OverFlowPrediction> getPredictionsForBin(@PathVariable Long binId) {
         return overflowPredictionService.getPredictionsForBin(binId);
     }
 
     @GetMapping("/zone/{zoneId}/latest")
-    public List<OverflowPrediction> getLatestPredictionsForZone(
+    public List<OverFlowPrediction> getLatestPredictionsForZone(
             @PathVariable Long zoneId
     ) {
         return overflowPredictionService.getLatestPredictionsForZone(zoneId);

@@ -1,3 +1,4 @@
 @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role Role;   // USER / ADMIN
+    private Role Role;   
+    

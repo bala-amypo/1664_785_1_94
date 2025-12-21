@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/api/predictions")
 @Tag(name = "Overflow Predictions")
-public class OverflowPredictionController {
+public class OverFlowPredictionController {
 
-    private final OverflowPredictionService overflowPredictionService;
+    private final OverFlowPredictionService overflowPredictionService;
 
-    public OverflowPredictionController(OverflowPredictionService overflowPredictionService) {
+    public OverFlowPredictionController(OverflowPredictionService overflowPredictionService) {
         this.overflowPredictionService = overflowPredictionService;
     }
 

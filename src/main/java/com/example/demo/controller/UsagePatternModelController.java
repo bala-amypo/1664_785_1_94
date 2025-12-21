@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import com.example.demo.service.UsagePatternModelService;
 import com.example.demo.model.UsagePatternModel;
-import com.example.demo.model.UsagePattern
+import com.example.demo.model.UsagePatternBindId;
 
 
 @RestController

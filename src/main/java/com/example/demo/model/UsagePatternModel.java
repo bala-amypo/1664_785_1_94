@@ -1,23 +1,33 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.OneToOne;
-
+import jakarta.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
+@Table(name = "usage_pattern_models")
 public class UsagePatternModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "bin_id")
     private Bin bin;
 
+    @Column(nullable = false)
     private Double avgDailyIncreaseWeekday;
+
+    @Column(nullable = false)
     private Double avgDailyIncreaseWeekend;
 
     private Timestamp lastUpdated;
+
+    @PrePersist
+    @PreUpdate
+    protected void updateTimestamp() {
+        lastUpdated = new Timestamp(System.currentTimeMillis());
+    }
+
+    
 }

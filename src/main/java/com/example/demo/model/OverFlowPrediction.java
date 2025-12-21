@@ -1,27 +1,36 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.ManyToOne;
-
-
+import jakarta.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
-public class OverFlowPrediction {
+@Table(name = "overflow_predictions")
+public class OverflowPrediction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "bin_id")
     private Bin bin;
 
-    private LocalDate predictedFullDate;
+    @Temporal(TemporalType.DATE)
+    private Date predictedFullDate;
+
     private Integer daysUntilFull;
 
     @ManyToOne
+    @JoinColumn(name = "model_used_id")
     private UsagePatternModel modelUsed;
 
     private Timestamp generatedAt;
+
+    @PrePersist
+    protected void onGenerate() {
+        generatedAt = new Timestamp(System.currentTimeMillis());
+    }
+
+   
 }

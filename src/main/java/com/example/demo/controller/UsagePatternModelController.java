@@ -2,62 +2,41 @@ package com.example.demo.controller;
 
 import com.example.demo.model.UsagePatternModel;
 import com.example.demo.service.UsagePatternModelService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/usage-pattern-models")
+@RequestMapping("/api/models")
+@Tag(name = "Usage Pattern Models")
 public class UsagePatternModelController {
 
-    private final UsagePatternModelService usagePatternModelService;
+    private final UsagePatternModelService modelService;
 
-    // ✅ Constructor Injection (MANDATORY for your test suite)
-    public UsagePatternModelController(UsagePatternModelService usagePatternModelService) {
-        this.usagePatternModelService = usagePatternModelService;
+    public UsagePatternModelController(UsagePatternModelService modelService) {
+        this.modelService = modelService;
     }
 
-    // ---------------- CREATE ----------------
     @PostMapping
-    public ResponseEntity<UsagePatternModel> createModel(
-            @RequestBody UsagePatternModel model) {
-
-        UsagePatternModel savedModel =
-                usagePatternModelService.createModel(model);
-
-        return new ResponseEntity<>(savedModel, HttpStatus.CREATED);
+    public UsagePatternModel createModel(@RequestBody UsagePatternModel model) {
+        return modelService.createModel(model);
     }
 
-    // ---------------- UPDATE ----------------
     @PutMapping("/{id}")
-    public ResponseEntity<UsagePatternModel> updateModel(
+    public UsagePatternModel updateModel(
             @PathVariable Long id,
             @RequestBody UsagePatternModel model) {
-
-        UsagePatternModel updatedModel =
-                usagePatternModelService.updateModel(id, model);
-
-        return ResponseEntity.ok(updatedModel);
+        return modelService.updateModel(id, model);
     }
 
-    // ---------------- GET MODEL FOR BIN ----------------
     @GetMapping("/bin/{binId}")
-    public ResponseEntity<UsagePatternModel> getModelForBin(
-            @PathVariable Long binId) {
-
-        UsagePatternModel model =
-                usagePatternModelService.getModelForBin(binId);
-
-        return ResponseEntity.ok(model);
+    public UsagePatternModel getModelForBin(@PathVariable Long binId) {
+        return modelService.getModelForBin(binId);
     }
 
-    // ---------------- GET ALL MODELS ----------------
     @GetMapping
-    public ResponseEntity<List<UsagePatternModel>> getAllModels() {
-        return ResponseEntity.ok(
-                usagePatternModelService.getAllModels()
-        );
+    public List<UsagePatternModel> getAllModels() {
+        return modelService.getAllModels();
     }
 }

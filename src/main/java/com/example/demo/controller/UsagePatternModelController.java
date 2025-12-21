@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import com.example.demo.
+import com.example.demo.service.UsagePatternModelService;
+import com.example.demo.model.UsagePatternModel;
 
 
 

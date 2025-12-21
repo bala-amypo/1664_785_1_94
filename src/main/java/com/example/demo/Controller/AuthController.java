@@ -15,11 +15,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public UserService register(
+    public UserService register{
             @RequestParam String fullName,
             @RequestParam String email,
             @RequestParam String password,
-    )
+    
+    }
     
      {
         return userService.registerUser(fullName, email, password);

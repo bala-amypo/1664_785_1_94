@@ -1,33 +1,21 @@
-package com.example.demo.controller;
+package com.example.demo.Controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Authentication")
 public class AuthController {
 
-    private final UserService UserService;
-
-    public AuthController(UserService UserService) {
-        this.UserService = UserService;
-    }
-
-    @PostMapping("/register")
-    public UserService register{
-            @RequestParam String fullName,
-            @RequestParam String email,
-            @RequestParam String password,
-    
-    }
-    
-     {
-        return userService.registerUser(fullName, email, password);
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello Auth";
     }
 
     @PostMapping("/login")
-    public UserService login(@RequestParam String email) {
-        return userService.getByEmail(email);
+    public String login() {
+        return "Login successful";
     }
 }

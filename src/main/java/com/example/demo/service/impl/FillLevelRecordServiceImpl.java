@@ -24,7 +24,7 @@ public class FillLevelRecordServiceImpl implements FillLevelRecordService {
     private BinRepository binRepository;
 
     @Override
-    public FillLevelRecord addRecord(FillLevelRecord record, Long binId) {
+    public FillLevelRecord createRecord(FillLevelRecord record, Long binId) {
         Bin bin = binRepository.findById(binId)
                 .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
         record.setBin(bin);

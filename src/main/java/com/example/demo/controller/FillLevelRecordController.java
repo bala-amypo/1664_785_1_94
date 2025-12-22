@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/fill-records")
+@RequestMapping("/api/fill-level-records")
 @Tag(name = "Fill Level Records")
 public class FillLevelRecordController {
 
@@ -18,25 +18,27 @@ public class FillLevelRecordController {
         this.recordService = recordService;
     }
 
-    @PostMapping
-    public FillLevelRecord createRecord(@RequestBody FillLevelRecord record) {
-        return recordService.createRecord(record);
+    // Create a new fill level record for a specific bin
+    @PostMapping("/bin/{binId}")
+    public FillLevelRecord createRecord(@PathVariable Long binId, @RequestBody FillLevelRecord record) {
+        return recordService.createRecord(record, binId);
     }
 
+    // Get a specific record by its ID
     @GetMapping("/{id}")
-    public FillLevelRecord getRecord(@PathVariable Long id) {
+    public FillLevelRecord getRecordById(@PathVariable Long id) {
         return recordService.getRecordById(id);
     }
 
+    // Get all records for a specific bin
     @GetMapping("/bin/{binId}")
     public List<FillLevelRecord> getRecordsForBin(@PathVariable Long binId) {
         return recordService.getRecordsForBin(binId);
     }
 
+    // Get recent 'count' records for a specific bin
     @GetMapping("/bin/{binId}/recent")
-    public List<FillLevelRecord> getRecentRecords(
-            @PathVariable Long binId,
-            @RequestParam int limit) {
-        return recordService.getRecentRecords(binId, limit);
+    public List<FillLevelRecord> getRecentRecords(@PathVariable Long binId, @RequestParam int count) {
+        return recordService.getRecentRecords(binId, count);
     }
 }

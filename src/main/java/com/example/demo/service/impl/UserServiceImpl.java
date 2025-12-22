@@ -7,7 +7,7 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service   
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -17,13 +17,14 @@ public class UserServiceImpl implements UserService {
     public User registerUser(String fullName, String email, String password) {
 
         if (userRepository.existsByEmail(email)) {
-            throw new RuntimeException("User already exists with email: " + email);
+            throw new RuntimeException(
+                    "User already exists with email: " + email);
         }
 
         User user = new User();
         user.setFullName(fullName);
         user.setEmail(email);
-        user.setPassword(password); // (Encrypt later with BCrypt)
+        user.setPassword(password); // Encrypt later (BCrypt)
 
         return userRepository.save(user);
     }

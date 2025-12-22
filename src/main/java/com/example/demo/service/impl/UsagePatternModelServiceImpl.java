@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Service   
+@Service
 public class UsagePatternModelServiceImpl implements UsagePatternModelService {
 
     @Autowired
@@ -28,7 +28,8 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
 
         Bin bin = binRepository.findById(binId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Bin not found with id: " + binId));
+                        new ResourceNotFoundException(
+                                "Bin not found with id: " + binId));
 
         model.setBin(bin);
         model.setCreatedAt(LocalDateTime.now());

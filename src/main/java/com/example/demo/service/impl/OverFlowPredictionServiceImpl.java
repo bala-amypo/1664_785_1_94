@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Service  
+@Service
 public class OverFlowPredictionServiceImpl implements OverFlowPredictionService {
 
     @Autowired
@@ -31,9 +31,9 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
 
         Bin bin = binRepository.findById(binId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Bin not found with id: " + binId));
+                        new ResourceNotFoundException(
+                                "Bin not found with id: " + binId));
 
-        
         FillLevelRecord latestRecord =
                 recordRepository.findRecentRecords(binId, 1)
                         .stream()
@@ -42,7 +42,6 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
                                 new ResourceNotFoundException(
                                         "No fill-level data found for bin id: " + binId));
 
-       
         boolean willOverflow = latestRecord.getFillPercentage() >= 80;
 
         OverFlowPrediction prediction = new OverFlowPrediction();
@@ -57,7 +56,8 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
     public OverFlowPrediction getPredictionById(Long id) {
         return predictionRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Prediction not found with id: " + id));
+                        new ResourceNotFoundException(
+                                "Prediction not found with id: " + id));
     }
 
     @Override

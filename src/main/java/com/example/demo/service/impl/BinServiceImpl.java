@@ -30,6 +30,12 @@ public class BinServiceImpl implements BinService {
     }
 
     @Override
+    public Bin getBinById(Long id) {
+        return binRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + id));
+    }
+
+    @Override
     public List<Bin> getAllBins() {
         return binRepository.findAll();
     }

@@ -29,11 +29,6 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
     private BinRepository binRepository;
 
     @Override
-    public List<OverFlowPrediction> getPredictionsForBin(Long binId) {
-        return predictionRepository.findByBinId(binId);
-    }
-
-    @Override
     public OverFlowPrediction predictOverflow(Long binId, int recentCount) {
         Bin bin = binRepository.findById(binId)
                 .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
@@ -50,6 +45,17 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
         prediction.setPredictedAt(LocalDateTime.now());
 
         return predictionRepository.save(prediction);
+    }
+
+    @Override
+    public OverFlowPrediction getPredictionById(Long id) {
+        return predictionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("OverFlowPrediction not found with id " + id));
+    }
+
+    @Override
+    public List<OverFlowPrediction> getPredictionsForBin(Long binId) {
+        return predictionRepository.findByBinId(binId);
     }
 
     @Override

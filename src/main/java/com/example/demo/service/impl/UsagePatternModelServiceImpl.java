@@ -31,7 +31,7 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
     }
 
     @Override
-    public UsagePatternModel getUsagePatternModel(Long binId) {
+    public UsagePatternModel getModelForBin(Long binId) {
         return modelRepository.findByBinId(binId);
     }
 

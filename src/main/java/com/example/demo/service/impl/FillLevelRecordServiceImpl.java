@@ -39,6 +39,11 @@ public class FillLevelRecordServiceImpl implements FillLevelRecordService {
     }
 
     @Override
+    public List<FillLevelRecord> getRecordsForBin(Long binId) {
+        return recordRepository.findByBinId(binId);
+    }
+
+    @Override
     public FillLevelRecord getRecordById(Long id) {
         return recordRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("FillLevelRecord not found with id " + id));

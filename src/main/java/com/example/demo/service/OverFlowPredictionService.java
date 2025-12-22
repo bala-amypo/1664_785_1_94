@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.model.OverflowPrediction;
 import java.util.List;
 
-public interface OverflowPredictionService {
+public interface OverFlowPredictionService {
     OverflowPrediction generatePrediction(Long binId);
     OverflowPrediction getPredictionById(Long id);
     List<OverflowPrediction> getPredictionsForBin(Long binId);

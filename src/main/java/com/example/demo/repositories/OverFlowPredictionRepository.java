@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface OverflowPredictionRepository
+public interface OverFlowPredictionRepository
         extends JpaRepository<OverflowPrediction, Long> {
 
     @Query("""

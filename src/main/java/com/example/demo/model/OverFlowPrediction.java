@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "overflow_predictions")
-public class OverflowPrediction {
+public class OverFlowPrediction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

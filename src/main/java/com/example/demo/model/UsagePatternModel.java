@@ -1,33 +1,25 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.sql.Timestamp;
+import lombok.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "usage_pattern_models")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsagePatternModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "bin_id")
+    @ManyToOne
     private Bin bin;
 
-    @Column(nullable = false)
-    private Double avgDailyIncreaseWeekday;
-
-    @Column(nullable = false)
-    private Double avgDailyIncreaseWeekend;
-
-    private Timestamp lastUpdated;
-
-    @PrePersist
-    @PreUpdate
-    protected void updateTimestamp() {
-        lastUpdated = new Timestamp(System.currentTimeMillis());
-    }
-
-    
+    private Double averageDailyUsage;
+    private String peakUsageTime;
+    private String usageTrend;
+    private LocalDateTime createdAt;
 }

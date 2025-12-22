@@ -61,6 +61,6 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
     @Override
     public List<OverFlowPrediction> getLatestPredictionsForZone(Long zoneId) {
         // Make sure this method exists in OverFlowPredictionRepository
-        return predictionRepository.findTopByZoneIdOrderByPredictedAtDesc(zoneId);
+        return OverFlowpredictionRepository.findTopByZoneIdOrderByPredictedAtDesc(zoneId);
     }
 }

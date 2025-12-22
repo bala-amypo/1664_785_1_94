@@ -29,11 +29,11 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
     private BinRepository binRepository;
 
     @Override
-    public OverFlowPrediction predictOverflow(Long binId, int recentCount) {
+    public OverFlowPrediction generatePrediction(Long binId) {
         Bin bin = binRepository.findById(binId)
                 .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
 
-        Pageable pageable = PageRequest.of(0, recentCount);
+        Pageable pageable = PageRequest.of(0, 5); // choose last 5 records or adjust as needed
         List<FillLevelRecord> recentRecords = recordRepository.findRecentRecords(binId, pageable);
 
         boolean willOverflow = recentRecords.stream()
@@ -60,6 +60,7 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
 
     @Override
     public List<OverFlowPrediction> getLatestPredictionsForZone(Long zoneId) {
-        return predictionRepository.findLatestPredictionsForZone(zoneId);
+        // Make sure this method exists in OverFlowPredictionRepository
+        return predictionRepository.findTopByZoneIdOrderByPredictedAtDesc(zoneId);
     }
 }

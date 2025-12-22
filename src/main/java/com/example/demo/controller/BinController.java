@@ -12,34 +12,34 @@ import java.util.List;
 @Tag(name = "Bins")
 public class BinController {
 
-    private final BinService BinService;
+    private final BinService binService; // lowercase variable
 
     public BinController(BinService binService) {
-        this.BinService = BinService;
+        this.binService = binService; // assign correctly
     }
 
     @PostMapping
     public Bin createBin(@RequestBody Bin bin) {
-        return BinService.createBin(Bin);
+        return binService.createBin(bin); // use lowercase parameter
     }
 
     @PutMapping("/{id}")
     public Bin updateBin(@PathVariable Long id, @RequestBody Bin bin) {
-        return BinService.updateBin(id, Bin);
+        return binService.updateBin(id, bin); // use lowercase parameter
     }
 
     @GetMapping("/{id}")
     public Bin getBin(@PathVariable Long id) {
-        return BinService.getBinById(id);
+        return binService.getBinById(id);
     }
 
     @GetMapping
     public List<Bin> getAllBins() {
-        return BinService.getAllBins();
+        return binService.getAllBins();
     }
 
     @PutMapping("/{id}/deactivate")
     public void deactivateBin(@PathVariable Long id) {
-        BinService.deactivateBin(id);
+        binService.deactivateBin(id);
     }
 }

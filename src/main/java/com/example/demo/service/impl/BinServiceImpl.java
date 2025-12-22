@@ -7,33 +7,47 @@ import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public interface BinService {
-    Bin createBin(Bin bin);
-    List<Bin> getAllBins();
-    Bin getBinById(Long id);
-    Bin updateBin(Long id, Bin bin);
-    void deactivateBin(Long id);
-}
+import java.util.List;
 
+@Service
+public class BinServiceImpl implements BinService {
 
     @Autowired
     private BinRepository binRepository;
 
-  @Override
-public Bin createBin(Bin bin) {
-    return binRepository.save(bin);
-}
+    @Override
+    public Bin createBin(Bin bin) {
+        return binRepository.save(bin);
+    }
 
-@Override
-public List<Bin> getAllBins() {
-    return binRepository.findAll();
-}
+    @Override
+    public List<Bin> getAllBins() {
+        return binRepository.findAll();
+    }
 
-@Override
-public void deactivateBin(Long id) {
-    Bin existingBin = binRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
-    existingBin.setActive(false); // assuming Bin has an "active" field
-    binRepository.save(existingBin);
+    @Override
+    public Bin getBinById(Long id) {
+        return binRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
+    }
+
+    @Override
+    public Bin updateBin(Long id, Bin bin) {
+        Bin existingBin = binRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
+
+        existingBin.setName(bin.getName());
+        existingBin.setLocation(bin.getLocation());
+        existingBin.setCapacity(bin.getCapacity());
+
+        return binRepository.save(existingBin);
+    }
+
+    @Override
+    public void deactivateBin(Long id) {
+        Bin existingBin = binRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
+        existingBin.setActive(false); // make sure Bin has a boolean 'active' field
+        binRepository.save(existingBin);
+    }
 }

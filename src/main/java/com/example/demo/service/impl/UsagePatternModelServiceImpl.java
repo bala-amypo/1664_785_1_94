@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class UsagePatternModelServiceImpl implements UsagePatternModelService {
@@ -22,46 +21,22 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
     private BinRepository binRepository;
 
     @Override
-    public UsagePatternModel createModel(UsagePatternModel model) {
-
-        Long binId = model.getBin().getId();
-
+    public UsagePatternModel createUsagePatternModel(UsagePatternModel model, Long binId) {
         Bin bin = binRepository.findById(binId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Bin not found with id: " + binId));
-
+                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
         model.setBin(bin);
         model.setCreatedAt(LocalDateTime.now());
-
         return modelRepository.save(model);
     }
 
     @Override
-    public UsagePatternModel updateModel(Long id, UsagePatternModel model) {
-
-        UsagePatternModel existingModel = modelRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "UsagePatternModel not found with id: " + id));
-
-        existingModel.setAverageDailyUsage(model.getAverageDailyUsage());
-        existingModel.setPeakUsageTime(model.getPeakUsageTime());
-        existingModel.setUsageTrend(model.getUsageTrend());
-
-        return modelRepository.save(existingModel);
+    public UsagePatternModel getUsagePatternModel(Long binId) {
+        return modelRepository.findByBinId(binId);
     }
 
     @Override
-    public UsagePatternModel getModelForBin(Long binId) {
-        return modelRepository.findByBinId(binId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "UsagePatternModel not found for bin id: " + binId));
-    }
-
-    @Override
-    public List<UsagePatternModel> getAllModels() {
-        return modelRepository.findAll();
+    public UsagePatternModel getUsagePatternModelById(Long id) {
+        return modelRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("UsagePatternModel not found with id " + id));
     }
 }

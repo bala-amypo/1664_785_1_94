@@ -14,31 +14,16 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User registerUser(String fullName, String email, String password) {
-
-        if (userRepository.existsByEmail(email)) {
-            throw new RuntimeException(
-                    "User already exists with email: " + email);
+    public User createUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new IllegalArgumentException("Email already exists");
         }
-
-        User user = new User();
-        user.setFullName(fullName);
-        user.setEmail(email);
-        user.setPassword(password); // Encrypt later (BCrypt)
-
         return userRepository.save(user);
     }
 
     @Override
-    public User getByEmail(String email) {
+    public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "User not found with email: " + email));
-    }
-
-    @Override
-    public boolean exists(String email) {
-        return userRepository.existsByEmail(email);
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email " + email));
     }
 }

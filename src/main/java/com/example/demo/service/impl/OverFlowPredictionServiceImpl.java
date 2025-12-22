@@ -9,6 +9,8 @@ import com.example.demo.repository.FillLevelRecordRepository;
 import com.example.demo.repository.OverFlowPredictionRepository;
 import com.example.demo.service.OverFlowPredictionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,28 +23,21 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
     private OverFlowPredictionRepository predictionRepository;
 
     @Autowired
-    private BinRepository binRepository;
-
-    @Autowired
     private FillLevelRecordRepository recordRepository;
 
+    @Autowired
+    private BinRepository binRepository;
+
     @Override
-    public OverFlowPrediction generatePrediction(Long binId) {
-
+    public OverFlowPrediction predictOverflow(Long binId, int recentCount) {
         Bin bin = binRepository.findById(binId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Bin not found with id: " + binId));
+                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
 
-        FillLevelRecord latestRecord =
-                recordRepository.findRecentRecords(binId, 1)
-                        .stream()
-                        .findFirst()
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "No fill-level data found for bin id: " + binId));
+        Pageable pageable = PageRequest.of(0, recentCount);
+        List<FillLevelRecord> recentRecords = recordRepository.findRecentRecords(binId, pageable);
 
-        boolean willOverflow = latestRecord.getFillPercentage() >= 80;
+        boolean willOverflow = recentRecords.stream()
+                .anyMatch(r -> r.getFillPercentage() >= 90);
 
         OverFlowPrediction prediction = new OverFlowPrediction();
         prediction.setBin(bin);
@@ -50,19 +45,6 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
         prediction.setPredictedAt(LocalDateTime.now());
 
         return predictionRepository.save(prediction);
-    }
-
-    @Override
-    public OverFlowPrediction getPredictionById(Long id) {
-        return predictionRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Prediction not found with id: " + id));
-    }
-
-    @Override
-    public List<OverFlowPrediction> getPredictionsForBin(Long binId) {
-        return predictionRepository.findByBinId(binId);
     }
 
     @Override

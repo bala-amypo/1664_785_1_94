@@ -22,7 +22,7 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
     private BinRepository binRepository;
 
     @Override
-    public UsagePatternModel createUsagePatternModel(UsagePatternModel model, Long binId) {
+    public UsagePatternModel createModel(UsagePatternModel model, Long binId) {
         Bin bin = binRepository.findById(binId)
                 .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
         model.setBin(bin);
@@ -46,15 +46,15 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
         return modelRepository.findAll();
     }
 
-    // ---- Add the missing update method ----
     @Override
     public UsagePatternModel updateModel(Long id, UsagePatternModel model) {
         UsagePatternModel existingModel = modelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("UsagePatternModel not found with id " + id));
 
-        existingModel.setName(model.getName()); // example field
-        existingModel.setPatternData(model.getPatternData()); // example field
-        existingModel.setUpdatedAt(LocalDateTime.now());
+        // Make sure your UsagePatternModel has these fields:
+        existingModel.setModelName(model.getModelName()); // instead of getName()
+        existingModel.setPattern(model.getPattern());     // instead of getPatternData()
+        existingModel.setUpdatedAt(LocalDateTime.now());  // make sure setUpdatedAt exists
 
         return modelRepository.save(existingModel);
     }

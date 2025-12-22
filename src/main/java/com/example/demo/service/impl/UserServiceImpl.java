@@ -1,3 +1,12 @@
+package com.example.demo.service.impl;
+
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
+import com.example.demo.exception.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -6,13 +15,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(String name, String email, String password) {
-        if(userRepository.findByEmail(email).isPresent()) {
-            throw new RuntimeException("User already exists");
+       
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new IllegalArgumentException("User with email " + email + " already exists");
         }
+
         User user = new User();
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
+        
+
         return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
     }
 }

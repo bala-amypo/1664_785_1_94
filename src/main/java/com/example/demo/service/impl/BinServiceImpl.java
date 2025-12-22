@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service  
+@Service
 public class BinServiceImpl implements BinService {
 
     @Autowired
@@ -17,7 +17,7 @@ public class BinServiceImpl implements BinService {
 
     @Override
     public Bin createBin(Bin bin) {
-        bin.setActive(true);   
+        bin.setActive(true);  
         return binRepository.save(bin);
     }
 

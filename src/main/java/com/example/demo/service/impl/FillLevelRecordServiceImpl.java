@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Service   
+@Service
 public class FillLevelRecordServiceImpl implements FillLevelRecordService {
 
     @Autowired
@@ -45,7 +45,8 @@ public class FillLevelRecordServiceImpl implements FillLevelRecordService {
     public FillLevelRecord getRecordById(Long id) {
         return recordRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("FillLevelRecord not found with id: " + id));
+                        new ResourceNotFoundException(
+                                "FillLevelRecord not found with id: " + id));
     }
 
     @Override

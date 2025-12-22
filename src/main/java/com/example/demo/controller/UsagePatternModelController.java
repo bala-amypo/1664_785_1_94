@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/models")
+@RequestMapping("/api/usage-patterns")
 @Tag(name = "Usage Pattern Models")
 public class UsagePatternModelController {
 
@@ -18,16 +18,19 @@ public class UsagePatternModelController {
         this.modelService = modelService;
     }
 
-    @PostMapping
-    public UsagePatternModel createModel(@RequestBody UsagePatternModel model) {
-        return modelService.createModel(model);
+    @PostMapping("/bin/{binId}")
+    public UsagePatternModel createModel(@PathVariable Long binId, @RequestBody UsagePatternModel model) {
+        return modelService.createModel(model, binId); // Pass binId as second parameter
     }
 
     @PutMapping("/{id}")
-    public UsagePatternModel updateModel(
-            @PathVariable Long id,
-            @RequestBody UsagePatternModel model) {
+    public UsagePatternModel updateModel(@PathVariable Long id, @RequestBody UsagePatternModel model) {
         return modelService.updateModel(id, model);
+    }
+
+    @GetMapping("/{id}")
+    public UsagePatternModel getModelById(@PathVariable Long id) {
+        return modelService.getUsagePatternModelById(id);
     }
 
     @GetMapping("/bin/{binId}")

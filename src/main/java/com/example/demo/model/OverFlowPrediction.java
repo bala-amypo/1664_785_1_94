@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class OverFlowPrediction {
 
+@Autowired
+private OverFlowPredictionRepository predictionRepository; // fix variable name
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

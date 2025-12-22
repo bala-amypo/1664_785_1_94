@@ -51,10 +51,9 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
         UsagePatternModel existingModel = modelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("UsagePatternModel not found with id " + id));
 
-        // Make sure your UsagePatternModel has these fields:
-        existingModel.setModelName(model.getModelName()); // instead of getName()
-        existingModel.setPattern(model.getPattern());     // instead of getPatternData()
-        existingModel.setUpdatedAt(LocalDateTime.now());  // make sure setUpdatedAt exists
+        existingModel.setModelName(model.getModelName());
+        existingModel.setPattern(model.getPattern());
+        existingModel.setUpdatedAt(LocalDateTime.now());
 
         return modelRepository.save(existingModel);
     }

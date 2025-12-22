@@ -1,6 +1,6 @@
 package com.example.demo.exception;
 
-public class BudgetRequestException extends RuntimeException {
+public class BadRequestException extends RuntimeException {
 
     public BudgetRequestException(String message) {
         super(message);

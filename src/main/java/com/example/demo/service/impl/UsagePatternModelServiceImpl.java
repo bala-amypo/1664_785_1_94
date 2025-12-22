@@ -45,4 +45,17 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
     public List<UsagePatternModel> getAllModels() {
         return modelRepository.findAll();
     }
+
+    // ---- Add the missing update method ----
+    @Override
+    public UsagePatternModel updateModel(Long id, UsagePatternModel model) {
+        UsagePatternModel existingModel = modelRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("UsagePatternModel not found with id " + id));
+
+        existingModel.setName(model.getName()); // example field
+        existingModel.setPatternData(model.getPatternData()); // example field
+        existingModel.setUpdatedAt(LocalDateTime.now());
+
+        return modelRepository.save(existingModel);
+    }
 }

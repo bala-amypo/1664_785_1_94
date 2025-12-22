@@ -8,7 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BinServiceImpl implements BinService {
+public interface BinService {
+    Bin createBin(Bin bin);
+    List<Bin> getAllBins();
+    Bin getBinById(Long id);
+    Bin updateBin(Long id, Bin bin);
+    void deactivateBin(Long id);
+}
+
 
     @Autowired
     private BinRepository binRepository;

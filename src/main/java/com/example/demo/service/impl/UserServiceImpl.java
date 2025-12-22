@@ -15,8 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(String name, String email, String password) {
-       
-        if (userRepository.findByEmail(email).isPresent()) {
+        if (userRepository.existsByEmail(email)) { // Use existsByEmail instead of findByEmail
             throw new IllegalArgumentException("User with email " + email + " already exists");
         }
 
@@ -24,7 +23,6 @@ public class UserServiceImpl implements UserService {
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
-        
 
         return userRepository.save(user);
     }
@@ -33,5 +31,10 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+    }
+
+    @Override
+    public boolean exists(String email) {
+        return userRepository.existsByEmail(email); // Implement the missing interface method
     }
 }

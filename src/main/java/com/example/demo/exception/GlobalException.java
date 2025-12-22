@@ -25,9 +25,9 @@ public class GlobalException {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(BudgetRequestException.class)
-    public ResponseEntity<Map<String, Object>> handleBudgetException(
-            BudgetRequestException ex) {
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<Map<String, Object>> handleBadRequestException(
+            BadRequestException ex) {
 
         Map<String, Object> error = new HashMap<>();
         error.put("timestamp", LocalDateTime.now());

@@ -17,7 +17,7 @@ public class BinServiceImpl implements BinService {
 
     @Override
     public Bin createBin(Bin bin) {
-        bin.setActive(true);   // default active
+        bin.setActive(true);   
         return binRepository.save(bin);
     }
 

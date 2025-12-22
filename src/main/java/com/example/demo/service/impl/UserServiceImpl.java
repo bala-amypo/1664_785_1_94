@@ -7,25 +7,35 @@ import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Entity
-public class User {
+@Service
+public class UserServiceImpl implements UserService {
 
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String name;
-    private String email;
-    private String password;
+    @Autowired
+    private UserRepository userRepository;
 
-    // Add getters and setters
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    @Override
+    public User registerUser(String name, String email, String password) {
+        if (userRepository.existsByEmail(email)) { // Use existsByEmail instead of findByEmail
+            throw new IllegalArgumentException("User with email " + email + " already exists");
+        }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(password);
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-}
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+    }
+
+    @Override
+    public boolean exists(String email) {
+        return userRepository.existsByEmail(email); // Implement the missing interface method
+    }
 }
 

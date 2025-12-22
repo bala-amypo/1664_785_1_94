@@ -13,22 +13,20 @@ public class BinServiceImpl implements BinService {
     @Autowired
     private BinRepository binRepository;
 
-    @Override
-    public Bin getBinById(Long id) {
-        return binRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
-    }
+  @Override
+public Bin createBin(Bin bin) {
+    return binRepository.save(bin);
+}
 
-    @Override
-    public Bin updateBin(Long id, Bin bin) {
-        Bin existingBin = binRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
+@Override
+public List<Bin> getAllBins() {
+    return binRepository.findAll();
+}
 
-        existingBin.setName(bin.getName());
-        existingBin.setLocation(bin.getLocation());
-        existingBin.setCapacity(bin.getCapacity());
-        
-
-        return binRepository.save(existingBin);
-    }
+@Override
+public void deactivateBin(Long id) {
+    Bin existingBin = binRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
+    existingBin.setActive(false); // assuming Bin has an "active" field
+    binRepository.save(existingBin);
 }

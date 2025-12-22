@@ -34,7 +34,13 @@ public class FillLevelRecordServiceImpl implements FillLevelRecordService {
 
     @Override
     public List<FillLevelRecord> getRecentRecords(Long binId, int count) {
-        Pageable pageable = PageRequest.of(0, count); // first page, count records
+        Pageable pageable = PageRequest.of(0, count);
         return recordRepository.findRecentRecords(binId, pageable);
+    }
+
+    @Override
+    public FillLevelRecord getRecordById(Long id) {
+        return recordRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("FillLevelRecord not found with id " + id));
     }
 }

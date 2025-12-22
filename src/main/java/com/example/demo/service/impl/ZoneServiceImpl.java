@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service  
 public class ZoneServiceImpl implements ZoneService {
 
     @Autowired
@@ -26,8 +26,7 @@ public class ZoneServiceImpl implements ZoneService {
 
         Zone existingZone = zoneRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Zone not found with id: " + id));
+                        new ResourceNotFoundException("Zone not found with id: " + id));
 
         existingZone.setName(zone.getName());
         existingZone.setDescription(zone.getDescription());
@@ -39,8 +38,7 @@ public class ZoneServiceImpl implements ZoneService {
     public Zone getZoneById(Long id) {
         return zoneRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Zone not found with id: " + id));
+                        new ResourceNotFoundException("Zone not found with id: " + id));
     }
 
     @Override
@@ -53,8 +51,7 @@ public class ZoneServiceImpl implements ZoneService {
 
         Zone zone = zoneRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Zone not found with id: " + id));
+                        new ResourceNotFoundException("Zone not found with id: " + id));
 
         zone.setActive(false);
         zoneRepository.save(zone);

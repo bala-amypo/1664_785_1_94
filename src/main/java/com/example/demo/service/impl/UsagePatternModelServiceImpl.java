@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class UsagePatternModelServiceImpl implements UsagePatternModelService {
@@ -38,5 +39,10 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
     public UsagePatternModel getUsagePatternModelById(Long id) {
         return modelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("UsagePatternModel not found with id " + id));
+    }
+
+    @Override
+    public List<UsagePatternModel> getAllModels() {
+        return modelRepository.findAll();
     }
 }

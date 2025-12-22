@@ -7,6 +7,8 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -22,8 +24,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean exists(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with email " + email));
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

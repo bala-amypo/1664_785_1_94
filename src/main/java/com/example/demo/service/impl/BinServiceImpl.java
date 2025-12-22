@@ -22,11 +22,11 @@ public class BinServiceImpl implements BinService {
     }
 
     @Override
-    public Bin deactivateBin(Long id) {
+    public void deactivateBin(Long id) {
         Bin bin = binRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + id));
         bin.setActive(false);
-        return binRepository.save(bin);
+        binRepository.save(bin);
     }
 
     @Override

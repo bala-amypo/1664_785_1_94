@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.OverflowPrediction;
-import com.example.demo.service.OverflowPredictionService;
+import com.example.demo.model.OverFlowPrediction;
+import com.example.demo.service.OverFlowPredictionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +10,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/predictions")
 @Tag(name = "Overflow Predictions")
-public class OverflowPredictionController {
+public class OverFlowPredictionController {
 
-    private final OverflowPredictionService predictionService;
+    private final OverFlowPredictionService predictionService;
 
     public OverflowPredictionController(OverflowPredictionService predictionService) {
         this.predictionService = predictionService;

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OverFlowPredictionRepository
@@ -12,6 +13,6 @@ public interface OverFlowPredictionRepository
 
     List<OverFlowPrediction> findByBinId(Long binId);
 
-    List<OverFlowPrediction> 
+    Optional<OverFlowPrediction>
     findTop1ByBin_Zone_IdOrderByPredictedAtDesc(Long zoneId);
 }

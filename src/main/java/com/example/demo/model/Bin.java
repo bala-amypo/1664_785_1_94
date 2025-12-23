@@ -5,5 +5,7 @@ public class Bin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long zoneId;
+    private Long zoneId;   // ✅ REQUIRED
+
+    // getters & setters
 }

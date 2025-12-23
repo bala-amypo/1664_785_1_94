@@ -11,7 +11,6 @@ import java.util.List;
 @RequestMapping("/api/zones")
 @Tag(name = "Zones")
 public class ZoneController {
-
     private final ZoneService zoneService;
 
     public ZoneController(ZoneService zoneService) {

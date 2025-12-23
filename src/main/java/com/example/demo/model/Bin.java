@@ -1,11 +1,21 @@
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Bin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long zoneId;   // ✅ REQUIRED
-
-    // getters & setters
+    private String name;
+    private String location;
+    private Double capacity;
+    private Boolean active;
 }

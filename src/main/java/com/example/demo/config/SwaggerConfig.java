@@ -17,3 +17,4 @@ public class SwaggerConfig {
                 ));
         }
 }
+mvn help:describe -Dplugin=org.springframework.boot:spring-boot-maven-plugin

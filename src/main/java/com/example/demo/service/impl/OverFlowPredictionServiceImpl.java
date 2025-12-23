@@ -67,4 +67,4 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
     public List<OverFlowPrediction> getLatestPredictionsForZone(Long zoneId) {
         return predictionRepository.findTop1ByBin_Zone_IdOrderByPredictedAtDesc(zoneId);
     }
-}
+} 

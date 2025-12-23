@@ -1,10 +1,15 @@
 package com.example.demo.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.OverFlowPrediction;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 
-public interface OverFlowPredictionRepository extends JpaRepository<OverFlowPrediction, Long> {
+public interface OverFlowPredictionRepository
+        extends JpaRepository<OverFlowPrediction, Long> {
 
     List<OverFlowPrediction> findByBinId(Long binId);
+
+    List<OverFlowPrediction> 
+    findTop1ByBin_Zone_IdOrderByPredictedAtDesc(Long zoneId);
 }

@@ -30,11 +30,14 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
 
     @Override
     public OverFlowPrediction generatePrediction(Long binId) {
-        Bin bin = binRepository.findById(binId)
-                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
 
-        Pageable pageable = PageRequest.of(0, 5); // choose last 5 records or adjust as needed
-        List<FillLevelRecord> recentRecords = recordRepository.findRecentRecords(binId, pageable);
+        Bin bin = binRepository.findById(binId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Bin not found with id " + binId));
+
+        Pageable pageable = PageRequest.of(0, 5);
+        List<FillLevelRecord> recentRecords =
+                recordRepository.findRecentRecords(binId, pageable);
 
         boolean willOverflow = recentRecords.stream()
                 .anyMatch(r -> r.getFillPercentage() >= 90);
@@ -50,7 +53,9 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
     @Override
     public OverFlowPrediction getPredictionById(Long id) {
         return predictionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("OverFlowPrediction not found with id " + id));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "OverFlowPrediction not found with id " + id));
     }
 
     @Override
@@ -60,7 +65,7 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
 
     @Override
     public List<OverFlowPrediction> getLatestPredictionsForZone(Long zoneId) {
-        
-        return predictionRepository.findTopByZoneIdOrderByPredictedAtDesc(zoneId);
+        return predictionRepository
+                .findTop1ByBin_Zone_IdOrderByPredictedAtDesc(zoneId);
     }
 }

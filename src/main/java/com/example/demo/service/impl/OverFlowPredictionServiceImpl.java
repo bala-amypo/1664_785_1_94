@@ -31,19 +31,19 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
 
     @Override
     public OverFlowPrediction generatePrediction(Long binId) {
-        // Find the bin by its ID
+       
         Bin bin = binRepository.findById(binId)
                 .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
 
-        // Fetch the 5 most recent fill level records for the bin
+        
         Pageable pageable = PageRequest.of(0, 5);
         List<FillLevelRecord> recentRecords = recordRepository.findRecentRecords(binId, pageable);
 
-        // Check if any record has a fill percentage greater than or equal to 90%
+       
         boolean willOverflow = recentRecords.stream()
                 .anyMatch(r -> r.getFillPercentage() >= 90);
 
-        // Create and save the overflow prediction
+        
         OverFlowPrediction prediction = new OverFlowPrediction();
         prediction.setBin(bin);
         prediction.setPredictedOverflow(willOverflow);

@@ -10,15 +10,15 @@ public class UsagePatternModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String modelName;   // was 'name'
-    private String pattern;     // was 'patternData'
+    private String modelName;   
+    private String pattern;     
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     @ManyToOne
     private Bin bin;
 
-    // Getters and setters
+    
     public Long getId() { return id; }
 
     public String getModelName() { return modelName; }

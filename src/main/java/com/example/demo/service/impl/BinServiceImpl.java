@@ -47,7 +47,7 @@ public class BinServiceImpl implements BinService {
     public void deactivateBin(Long id) {
         Bin existingBin = binRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
-        existingBin.setActive(false); // make sure Bin has a boolean 'active' field
+        existingBin.setActive(false); 
         binRepository.save(existingBin);
     }
 }

@@ -4,7 +4,7 @@ import com.example.demo.model.OverFlowPrediction;
 import java.util.List;
 
 public interface OverFlowPredictionService {
-    OverFlowPrediction generatePrediction(Long binId); // matches implementation
+    OverFlowPrediction generatePrediction(Long binId);
     OverFlowPrediction getPredictionById(Long id);
     List<OverFlowPrediction> getPredictionsForBin(Long binId);
     List<OverFlowPrediction> getLatestPredictionsForZone(Long zoneId);

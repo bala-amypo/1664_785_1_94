@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(String name, String email, String password) {
-        if (userRepository.existsByEmail(email)) { // Use existsByEmail instead of findByEmail
+        if (userRepository.existsByEmail(email)) { 
             throw new IllegalArgumentException("User with email " + email + " already exists");
         }
 

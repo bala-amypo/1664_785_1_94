@@ -17,7 +17,7 @@ public class ZoneServiceImpl implements ZoneService {
 
     @Override
     public Zone createZone(Zone zone) {
-        zone.setActive(true);   // default active
+        zone.setActive(true);   
         return zoneRepository.save(zone);
     }
 

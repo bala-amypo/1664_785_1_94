@@ -54,23 +54,23 @@ public class OverFlowPredictionServiceImpl implements OverFlowPredictionService 
 
     @Override
     public OverFlowPrediction getPredictionById(Long id) {
-        // Fetch prediction by ID
+        
         return predictionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("OverFlowPrediction not found with id " + id));
     }
 
     @Override
     public List<OverFlowPrediction> getPredictionsForBin(Long binId) {
-        // Fetch all predictions for the given bin
+        
         return predictionRepository.findByBinId(binId);
     }
 
     @Override
     public List<OverFlowPrediction> getLatestPredictionsForZone(Long zoneId) {
-        // Fetch the latest prediction for the given zone
+        
         Optional<OverFlowPrediction> prediction = predictionRepository.findTop1ByBin_Zone_IdOrderByPredictedAtDesc(zoneId);
 
-        // Return a list containing the prediction if present, otherwise return an empty list
+       
         return prediction.map(List::of).orElseGet(List::of);
     }
 }

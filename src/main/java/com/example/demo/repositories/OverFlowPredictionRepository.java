@@ -12,6 +12,9 @@ public interface OverFlowPredictionRepository
 
     List<OverFlowPrediction> findByBinId(Long binId);
 
-    List<OverFlowPrediction> 
-    findTop1ByBin_Zone_IdOrderByPredictedAtDesc(Long zoneId);
+    // List<OverFlowPrediction> 
+    // findTop1ByBin_Zone_IdOrderByPredictedAtDesc(Long zoneId);
+    Optional<OverFlowPrediction>
+findTopByBin_ZoneIdOrderByPredictedAtDesc(Long zoneId);
+
 }

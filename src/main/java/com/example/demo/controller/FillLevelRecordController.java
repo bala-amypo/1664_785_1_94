@@ -18,25 +18,25 @@ public class FillLevelRecordController {
         this.recordService = recordService;
     }
 
-    // Create a new fill level record for a specific bin
+    
     @PostMapping("/bin/{binId}")
     public FillLevelRecord createRecord(@PathVariable Long binId, @RequestBody FillLevelRecord record) {
         return recordService.createRecord(record, binId);
     }
 
-    // Get a specific record by its ID
+    
     @GetMapping("/{id}")
     public FillLevelRecord getRecordById(@PathVariable Long id) {
         return recordService.getRecordById(id);
     }
 
-    // Get all records for a specific bin
+    
     @GetMapping("/bin/{binId}")
     public List<FillLevelRecord> getRecordsForBin(@PathVariable Long binId) {
         return recordService.getRecordsForBin(binId);
     }
 
-    // Get recent 'count' records for a specific bin
+    
     @GetMapping("/bin/{binId}/recent")
     public List<FillLevelRecord> getRecentRecords(@PathVariable Long binId, @RequestParam int count) {
         return recordService.getRecentRecords(binId, count);

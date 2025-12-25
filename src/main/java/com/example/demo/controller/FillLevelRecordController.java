@@ -29,7 +29,7 @@ public class FillLevelRecordController {
     }
 
     @PostMapping
-    public FillLevelRecord createRecord(@RequestBody FillLevelRecord record) {
+    public FillLevelRecord createeRecord(@RequestBody FillLevelRecord record) {
         return recordService.createRecord(record);
     }
 

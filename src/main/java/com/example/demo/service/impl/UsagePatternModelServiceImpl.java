@@ -20,7 +20,7 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
 
     @Override
     public UsagePatternModel createModel(UsagePatternModel model) {
-        if (model.getDailyIncrease() < 0) {
+        if (model.getAvgDailyIncreaseWeekday() < 0) {
             throw new BadRequestException("Negative increase not allowed");
         }
         return repository.save(model);
@@ -30,7 +30,7 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
     public UsagePatternModel updateModel(Long id, UsagePatternModel model) {
         UsagePatternModel existing = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Model not found"));
-        existing.setDailyIncrease(model.getAvgDailyIncreaseWeekday());
+        existing.setAvgDailyIncreaseWeekday(model.getAvgDailyIncreaseWeekday());
         return repository.save(existing);
     }
 

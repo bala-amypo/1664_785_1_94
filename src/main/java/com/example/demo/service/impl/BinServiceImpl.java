@@ -25,8 +25,8 @@ public class BinServiceImpl implements BinService {
     @Override
     public Bin updateBin(Long id, Bin bin) {
         Bin existing = getBinById(id);
-        existing.setName(bin.getIdentifier());
-        existing.setCapacity(bin.getCapacityLiters());
+        existing.setIdentifier(bin.getIdentifier());
+        existing.setCapacityLiters(bin.getCapacityLiters());
         return binRepository.save(existing);
     }
 

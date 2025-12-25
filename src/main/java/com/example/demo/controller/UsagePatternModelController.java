@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.UsagePatternModel;
 import com.example.demo.service.impl.UsagePatternModelServiceImpl;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.;
 
 @RestController
 @RequestMapping("/api/models")

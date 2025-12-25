@@ -5,7 +5,6 @@ import com.example.demo.model.Zone;
 import java.util.Optional;
 
 public interface ZoneRepository  extends JpaRepository<Zone,Long> {
-    Optional<Zone> findById(Long id);
     Optional<Zone> findByZoneName(String name);
-    Zone save(Zone zone);
+    
 }

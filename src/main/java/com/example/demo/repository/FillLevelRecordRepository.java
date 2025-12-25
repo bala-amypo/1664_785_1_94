@@ -2,11 +2,14 @@ package com.example.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.FillLevelRecord;
+import com.example.demo.model.Bin;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.domain.Pageable;
 import java.util.Optional;
+import java.time.LocalDateTime;
+
 
 public interface FillLevelRecordRepository extends JpaRepository<FillLevelRecord, Long> {
 

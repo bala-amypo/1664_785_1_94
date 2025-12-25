@@ -17,12 +17,12 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomerUserDetailsService customerUserDetailsService;
 
     public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider,
-                                   CustomUserDetailsService customUserDetailsService) {
+                                   CustomUserDetailsService customerUserDetailsService) {
         this.jwtTokenProvider = jwtTokenProvider;
-        this.customUserDetailsService = customUserDetailsService;
+        this.customerUserDetailsService = customerUserDetailsService;
     }
 
     @Override

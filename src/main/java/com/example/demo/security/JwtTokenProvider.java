@@ -10,12 +10,12 @@ public class JwtTokenProvider {
 
     private final String secret;
 
-    // Constructor
+   
     public JwtTokenProvider(String secret) {
         this.secret = secret;
     }
 
-    // Generate a token
+    
     public String generateToken(String subject, long expirationMillis) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMillis);
@@ -28,7 +28,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // Validate token and get claims
+    
     public Claims getClaimsFromToken(String token) {
         return Jwts.parser()
                 .setSigningKey(secret)
@@ -36,7 +36,7 @@ public class JwtTokenProvider {
                 .getBody();
     }
 
-    // Check if token is valid
+    
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
@@ -46,7 +46,7 @@ public class JwtTokenProvider {
         }
     }
 
-    // Get subject (e.g., username) from token
+    
     public String getSubject(String token) {
         return getClaimsFromToken(token).getSubject();
     }

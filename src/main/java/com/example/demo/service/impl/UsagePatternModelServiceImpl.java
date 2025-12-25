@@ -1,6 +1,5 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.UsagePatternModel;
 import com.example.demo.repository.UsagePatternModelRepository;
@@ -19,31 +18,24 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
     }
 
     @Override
-    public UsagePatternModel createModel(UsagePatternModel model) {
-        if (model.getAvgDailyIncreaseWeekday() < 0) {
-            throw new BadRequestException("Negative increase not allowed");
-        }
+    public UsagePatternModel createUsagePatternModel(UsagePatternModel model) {
         return repository.save(model);
     }
 
-
     @Override
-public UsagePatternModel getUsagePatternModelById(Long id) {
-    return repository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Usage pattern not found"));
-}
-
-    @Override
-    public UsagePatternModel updateModel(Long id, UsagePatternModel model) {
-        UsagePatternModel existing = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Model not found"));
-        existing.setAvgDailyIncreaseWeekday(model.getAvgDailyIncreaseWeekday());
-        return repository.save(existing);
+    public UsagePatternModel getUsagePatternModelById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("UsagePatternModel not found with id " + id)
+                );
     }
 
     @Override
-    public UsagePatternModel getModelForBin(Long binId) {
-        return repository.findTopByBinIdOrderByLastUpdatedDesc(Long binId);
+    public UsagePatternModel getLatestModelForBin(Long binId) {
+        return repository.findTopByBinIdOrderByLastUpdatedDesc(binId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("No UsagePatternModel found for bin " + binId)
+                );
     }
 
     @Override

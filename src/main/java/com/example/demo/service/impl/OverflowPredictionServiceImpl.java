@@ -37,7 +37,7 @@ public class OverflowPredictionServiceImpl implements OverflowPredictionService 
     }
 
     @Override
-    public List<OverflowPrediction> getLatestPredictionsForZone(Zone zone) {
-        return repository.findLatestPredictionsForZone(zone);
+    public List<OverflowPrediction> getLatestPredictionsForZone(Long zoneId) {
+        return repository.findLatestPredictionsForZone(zoneId);
     }
 }

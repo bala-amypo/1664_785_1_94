@@ -1,60 +1,46 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.Bin;
 import com.example.demo.model.UsagePatternModel;
-import com.example.demo.repository.BinRepository;
 import com.example.demo.repository.UsagePatternModelRepository;
 import com.example.demo.service.UsagePatternModelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class UsagePatternModelServiceImpl implements UsagePatternModelService {
 
-    @Autowired
-    private UsagePatternModelRepository modelRepository;
+    private final UsagePatternModelRepository repository;
 
-    @Autowired
-    private BinRepository binRepository;
-
-    @Override
-    public UsagePatternModel createModel(UsagePatternModel model, Long binId) {
-        Bin bin = binRepository.findById(binId)
-                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
-        model.setBin(bin);
-        model.setCreatedAt(LocalDateTime.now());
-        return modelRepository.save(model);
+    public UsagePatternModelServiceImpl(UsagePatternModelRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public UsagePatternModel getModelForBin(Long binId) {
-        return modelRepository.findByBinId(binId);
-    }
-
-    @Override
-    public UsagePatternModel getUsagePatternModelById(Long id) {
-        return modelRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("UsagePatternModel not found with id " + id));
-    }
-
-    @Override
-    public List<UsagePatternModel> getAllModels() {
-        return modelRepository.findAll();
+    public UsagePatternModel createModel(UsagePatternModel model) {
+        if (model.getDailyIncrease() < 0) {
+            throw new BadRequestException("Negative increase not allowed");
+        }
+        return repository.save(model);
     }
 
     @Override
     public UsagePatternModel updateModel(Long id, UsagePatternModel model) {
-        UsagePatternModel existingModel = modelRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("UsagePatternModel not found with id " + id));
+        UsagePatternModel existing = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Model not found"));
+        existing.setDailyIncrease(model.getDailyIncrease());
+        return repository.save(existing);
+    }
 
-        existingModel.setModelName(model.getModelName());
-        existingModel.setPattern(model.getPattern());
-        existingModel.setUpdatedAt(LocalDateTime.now());
+    @Override
+    public UsagePatternModel getModelForBin(Long binId) {
+        return repository.findTopByBinIdOrderByCreatedAtDesc(binId);
+    }
 
-        return modelRepository.save(existingModel);
+    @Override
+    public List<UsagePatternModel> getAllModels() {
+        return repository.findAll();
     }
 }

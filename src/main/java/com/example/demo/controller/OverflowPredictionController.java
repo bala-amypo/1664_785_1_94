@@ -34,6 +34,6 @@ public class OverflowPredictionController {
 
     @GetMapping("/zone/{zoneId}")
     public List<OverflowPrediction> getPredictionsForZone(@PathVariable Long zoneId) {
-        return predictionService.getLatestPredictionsForZone(zoneId);
+        return predictionService.getLatestPredictionsByZone(zoneId);
     }
 }

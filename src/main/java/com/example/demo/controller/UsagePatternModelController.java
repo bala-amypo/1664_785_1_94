@@ -19,29 +19,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/models")
+@RequestMapping("/api/usage-patterns")
 public class UsagePatternModelController {
 
-    private final UsagePatternModelServiceImpl modelService;
+    private final UsagePatternModelService modelService;
 
-    public UsagePatternModelController(UsagePatternModelServiceImpl modelService) {
+    public UsagePatternModelController(UsagePatternModelService modelService) {
         this.modelService = modelService;
     }
 
     @PostMapping
-    public UsagePatternModel createModel(@RequestBody UsagePatternModel model) {
-        return modelService.createModel(model);
+    public ResponseEntity<UsagePatternModel> create(
+            @RequestBody UsagePatternModel model) {
+        return ResponseEntity.ok(
+                modelService.createUsagePatternModel(model)
+        );
     }
 
     @PutMapping("/{id}")
-    public UsagePatternModel updateModel(
+    public ResponseEntity<UsagePatternModel> update(
             @PathVariable Long id,
             @RequestBody UsagePatternModel model) {
-        return modelService.updateModel(id, model);
+        return ResponseEntity.ok(
+                modelService.updateModel(id, model)
+        );
     }
 
     @GetMapping("/bin/{binId}")
-    public UsagePatternModel getLatestModelForBin(@PathVariable Long binId) {
-        return modelService.getModelForBin(binId);
+    public ResponseEntity<UsagePatternModel> getForBin(
+            @PathVariable Long binId) {
+        return ResponseEntity.ok(
+                modelService.getLatestModelForBin(binId)
+        );
     }
 }

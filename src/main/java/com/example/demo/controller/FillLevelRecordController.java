@@ -33,7 +33,7 @@ public ResponseEntity<FillLevelRecord> createRecord(
         @PathVariable Long binId,
         @RequestBody FillLevelRecord record) {
     return ResponseEntity.ok(
-            fillLevelRecordService.createRecord(record, binId)
+            recordService.createRecord(record, binId)
     );
 }
 

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "overflow_predictions")
-public class OverFlowPrediction {
+public class OverflowPrediction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

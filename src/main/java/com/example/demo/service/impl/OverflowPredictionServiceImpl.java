@@ -3,7 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Bin;
 import com.example.demo.model.FillLevelRecord;
-import com.example.demo.model.OverFlowPrediction;
+import com.example.demo.model.OverflowPrediction;
 import com.example.demo.repository.BinRepository;
 import com.example.demo.repository.FillLevelRecordRepository;
 import com.example.demo.repository.OverFlowPredictionRepository;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OverFlowPredictionServiceImpl implements OverFlowPredictionService {
+public class OverflowPredictionServiceImpl implements OverflowPredictionService {
 
     @Autowired
     private OverFlowPredictionRepository predictionRepository;

@@ -26,6 +26,13 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
         return repository.save(model);
     }
 
+
+    @Override
+public UsagePatternModel getUsagePatternModelById(Long id) {
+    return repository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Usage pattern not found"));
+}
+
     @Override
     public UsagePatternModel updateModel(Long id, UsagePatternModel model) {
         UsagePatternModel existing = repository.findById(id)

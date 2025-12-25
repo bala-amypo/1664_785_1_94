@@ -6,5 +6,6 @@ import com.example.demo.model.Bin;
 import java.util.Optional;
 
 public interface UsagePatternModelRepository  extends JpaRepository<UsagePatternModel,Long>{
-    Optional<UsagePatternModel> findTop1ByBinOrderByLastUpdatedDesc(Bin bin);
+    OptionalfindTopByBinIdOrderByLastUpdatedDesc(Long binId);
+
 }

@@ -36,9 +36,9 @@ public class BinServiceImpl implements BinService {
         Bin existingBin = binRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
 
-        existingBin.setName(bin.getName());
-        existingBin.setLocation(bin.getLocation());
-        existingBin.setCapacity(bin.getCapacity());
+        existingBin.setName(bin.getIdentifier());
+        existingBin.setLocation(bin.getLocationDescription());
+        existingBin.setCapacity(bin.getCapacityLiters());
 
         return binRepository.save(existingBin);
     }

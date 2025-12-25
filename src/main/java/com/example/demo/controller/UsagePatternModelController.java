@@ -50,7 +50,7 @@ public class UsagePatternModelController {
     public ResponseEntity<UsagePatternModel> getForBin(
             @PathVariable Long binId) {
         return ResponseEntity.ok(
-                modelService.getLatestModelForBin(binId)
+                modelService.getModelForBin(binId)
         );
     }
 }

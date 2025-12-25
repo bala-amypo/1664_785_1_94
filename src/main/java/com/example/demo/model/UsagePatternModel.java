@@ -1,72 +1,46 @@
-package com.example.demo.model;
+package com.example.demo.controller;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import com.example.demo.model.UsagePatternModel;
+import com.example.demo.service.UsagePatternModelService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Entity
-public class UsagePatternModel {
+@RestController
+@RequestMapping("/api/usage-patterns")
+public class UsagePatternModelController {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final UsagePatternModelService modelService;
 
-    private Double avgDailyIncreaseWeekday;
-
-    private Double avgDailyIncreaseWeekend;
-
-    private LocalDateTime lastUpdated;
-
-    @ManyToOne
-    private Bin bin;
-
-    public UsagePatternModel() {
+    public UsagePatternModelController(UsagePatternModelService modelService) {
+        this.modelService = modelService;
     }
 
-    public UsagePatternModel(Long id,
-                             Double avgDailyIncreaseWeekday,
-                             Double avgDailyIncreaseWeekend,
-                             LocalDateTime lastUpdated,
-                             Bin bin) {
-        this.id = id;
-        this.avgDailyIncreaseWeekday = avgDailyIncreaseWeekday;
-        this.avgDailyIncreaseWeekend = avgDailyIncreaseWeekend;
-        this.lastUpdated = lastUpdated;
-        this.bin = bin;
+    @PostMapping("/bin/{binId}")
+    public ResponseEntity<UsagePatternModel> createModel(
+            @PathVariable Long binId,
+            @RequestBody UsagePatternModel model) {
+
+        return ResponseEntity.ok(
+                modelService.createModel(model, binId)
+        );
     }
 
-    public Long getId() {
-        return id;
+    @PutMapping("/{id}")
+    public ResponseEntity<UsagePatternModel> updateModel(
+            @PathVariable Long id,
+            @RequestBody UsagePatternModel model) {
+
+        return ResponseEntity.ok(
+                modelService.updateModel(id, model)
+        );
     }
 
-    public Double getAvgDailyIncreaseWeekday() {
-        return avgDailyIncreaseWeekday;
-    }
+    @GetMapping("/bin/{binId}")
+    public ResponseEntity<UsagePatternModel> getModelForBin(
+            @PathVariable Long binId) {
 
-    public void setAvgDailyIncreaseWeekday(Double avgDailyIncreaseWeekday) {
-        this.avgDailyIncreaseWeekday = avgDailyIncreaseWeekday;
-    }
-
-    public Double getAvgDailyIncreaseWeekend() {
-        return avgDailyIncreaseWeekend;
-    }
-
-    public void setAvgDailyIncreaseWeekend(Double avgDailyIncreaseWeekend) {
-        this.avgDailyIncreaseWeekend = avgDailyIncreaseWeekend;
-    }
-
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
-    public Bin getBin() {
-        return bin;
-    }
-
-    public void setBin(Bin bin) {
-        this.bin = bin;
+        return ResponseEntity.ok(
+                modelService.getModelForBin(binId)
+        );
     }
 }

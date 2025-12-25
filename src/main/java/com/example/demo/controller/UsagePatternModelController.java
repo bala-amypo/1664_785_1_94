@@ -4,6 +4,7 @@ import com.example.demo.model.UsagePatternModel;
 import com.example.demo.service.impl.UsagePatternModelServiceImpl;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import com.example.demo.service.UsagePatternModelService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

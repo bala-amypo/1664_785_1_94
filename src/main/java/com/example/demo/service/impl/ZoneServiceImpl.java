@@ -4,41 +4,35 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Zone;
 import com.example.demo.repository.ZoneRepository;
 import com.example.demo.service.ZoneService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service  
+@Service
 public class ZoneServiceImpl implements ZoneService {
 
-    @Autowired
-    private ZoneRepository zoneRepository;
+    private final ZoneRepository zoneRepository;
+
+    public ZoneServiceImpl(ZoneRepository zoneRepository) {
+        this.zoneRepository = zoneRepository;
+    }
 
     @Override
     public Zone createZone(Zone zone) {
-        zone.setActive(true);   
         return zoneRepository.save(zone);
     }
 
     @Override
     public Zone updateZone(Long id, Zone zone) {
-
-        Zone existingZone = zoneRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Zone not found with id: " + id));
-
-        existingZone.setName(zone.getName());
-        existingZone.setDescription(zone.getDescription());
-
-        return zoneRepository.save(existingZone);
+        Zone existing = getZoneById(id);
+        existing.setName(zone.getName());
+        return zoneRepository.save(existing);
     }
 
     @Override
     public Zone getZoneById(Long id) {
         return zoneRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Zone not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Zone not found"));
     }
 
     @Override
@@ -48,11 +42,7 @@ public class ZoneServiceImpl implements ZoneService {
 
     @Override
     public void deactivateZone(Long id) {
-
-        Zone zone = zoneRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Zone not found with id: " + id));
-
+        Zone zone = getZoneById(id);
         zone.setActive(false);
         zoneRepository.save(zone);
     }

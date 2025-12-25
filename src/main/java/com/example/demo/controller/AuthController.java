@@ -2,12 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Authentication")
 public class AuthController {
 
     private final UserService userService;
@@ -16,16 +16,29 @@ public class AuthController {
         this.userService = userService;
     }
 
+    
     @PostMapping("/register")
-    public User register(
+    public ResponseEntity<User> register(
             @RequestParam String fullName,
             @RequestParam String email,
             @RequestParam String password) {
-        return userService.registerUser(fullName, email, password);
+
+        User user = userService.registerUser(fullName, email, password);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
+    // POST /auth/login
     @PostMapping("/login")
-    public String login() {
-        return "JWT_TOKEN_PLACEHOLDER";
+    public ResponseEntity<User> login(
+            @RequestParam String email,
+            @RequestParam String password) {
+
+        User user = userService.getByEmail(email);
+
+        if (user == null || !user.getPassword().equals(password)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return ResponseEntity.ok(user);
     }
 }

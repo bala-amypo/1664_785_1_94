@@ -1,76 +1,44 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.Bin;
-import com.example.demo.model.FillLevelRecord;
 import com.example.demo.model.OverflowPrediction;
-import com.example.demo.repository.BinRepository;
-import com.example.demo.repository.FillLevelRecordRepository;
 import com.example.demo.repository.OverflowPredictionRepository;
 import com.example.demo.service.OverflowPredictionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OverflowPredictionServiceImpl implements OverflowPredictionService {
 
-    @Autowired
-    private OverflowPredictionRepository predictionRepository;
+    private final OverflowPredictionRepository repository;
 
-    @Autowired
-    private FillLevelRecordRepository recordRepository;
-
-    @Autowired
-    private BinRepository binRepository;
+    public OverflowPredictionServiceImpl(OverflowPredictionRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public OverflowPrediction generatePrediction(Long binId) {
-       
-        Bin bin = binRepository.findById(binId)
-                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
-
-        
-        Pageable pageable = PageRequest.of(0, 5);
-        List<FillLevelRecord> recentRecords = recordRepository.findRecentRecords(binId, pageable);
-
-       
-        boolean willOverflow = recentRecords.stream()
-                .anyMatch(r -> r.getFillPercentage() >= 90);
-
-        
         OverflowPrediction prediction = new OverflowPrediction();
-        prediction.setBin(bin);
-        prediction.setPredictedOverflow(willOverflow);
-        prediction.setPredictedAt(LocalDateTime.now());
-
-        return predictionRepository.save(prediction);
+        prediction.setBinId(binId);
+        prediction.setPredictedDate(LocalDate.now().plusDays(2));
+        return repository.save(prediction);
     }
 
     @Override
     public OverflowPrediction getPredictionById(Long id) {
-        
-        return predictionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("OverflowPrediction not found with id " + id));
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Prediction not found"));
     }
 
     @Override
     public List<OverflowPrediction> getPredictionsForBin(Long binId) {
-        
-        return predictionRepository.findByBinId(binId);
+        return repository.findByBinId(binId);
     }
 
     @Override
     public List<OverflowPrediction> getLatestPredictionsForZone(Long zoneId) {
-        
-        Optional<OverflowPrediction> prediction = predictionRepository.findTop1ByBin_Zone_IdOrderByPredictedAtDesc(zoneId);
-
-       
-        return prediction.map(List::of).orElseGet(List::of);
+        return repository.findLatestPredictionsByZone(zoneId);
     }
 }

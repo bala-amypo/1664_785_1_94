@@ -21,10 +21,9 @@ public class OverflowPredictionServiceImpl implements OverflowPredictionService 
     @Override
     public OverflowPrediction generatePrediction(Long binId) {
         OverflowPrediction prediction = new OverflowPrediction();
-        prediction.setBinId(binId);
-        prediction.setPredictedDate(LocalDate.now().plusDays(2));
         return repository.save(prediction);
     }
+
 
     @Override
     public OverflowPrediction getPredictionById(Long id) {

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface OverflowPredictionRepository extends JpaRepository<OverflowPrediction,Long>{
     OverflowPrediction save(OverflowPrediction prediction);
-    @Query("SELECT o FROM OverflowPrediction o WHERE o.zone = :zone")
+    @Query("SELECT o FROM OverflowPrediction o WHERE o.id = :zone")
 List<OverflowPrediction> findLatestPredictionsByZone(@Param("zone") Long zone);
 
 

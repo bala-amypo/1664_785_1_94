@@ -4,55 +4,37 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "fill_level_records")
 public class FillLevelRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double fillPercentage;
-
-    private LocalDateTime recordedAt;
-
     @ManyToOne
+    @JoinColumn(name = "bin_id", nullable = false)
     private Bin bin;
 
-    public FillLevelRecord() {
-    }
+    @Column(nullable = false)
+    private Double fillPercentage;
 
-    public FillLevelRecord(Long id, Double fillPercentage,
-                           LocalDateTime recordedAt, Bin bin) {
-        this.id = id;
-        this.fillPercentage = fillPercentage;
-        this.recordedAt = recordedAt;
-        this.bin = bin;
-    }
+    @Column(nullable = false)
+    private LocalDateTime recordedAt;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(nullable = false)
+    private Boolean isWeekend;
 
-    public Double getFillPercentage() {
-        return fillPercentage;
-    }
+    public Long getId() { return id; }
 
-    public void setFillPercentage(Double fillPercentage) {
-        this.fillPercentage = fillPercentage;
-    }
+    public Bin getBin() { return bin; }
+    public void setBin(Bin bin) { this.bin = bin; }
 
-    public LocalDateTime getRecordedAt() {
-        return recordedAt;
-    }
+    public Double getFillPercentage() { return fillPercentage; }
+    public void setFillPercentage(Double fillPercentage) { this.fillPercentage = fillPercentage; }
 
-    public void setRecordedAt(LocalDateTime recordedAt) {
-        this.recordedAt = recordedAt;
-    }
+    public LocalDateTime getRecordedAt() { return recordedAt; }
+    public void setRecordedAt(LocalDateTime recordedAt) { this.recordedAt = recordedAt; }
 
-    public Bin getBin() {
-        return bin;
-    }
-
-    public void setBin(Bin bin) {
-        this.bin = bin;
-    }
+    public Boolean getIsWeekend() { return isWeekend; }
+    public void setIsWeekend(Boolean isWeekend) { this.isWeekend = isWeekend; }
 }

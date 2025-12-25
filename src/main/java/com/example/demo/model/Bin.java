@@ -1,102 +1,60 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "bins", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "identifier")
+})
 public class Bin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String identifier;
 
-    private Double capacityLiters;
+    private String locationDescription;
 
     private Double latitude;
 
     private Double longitude;
 
-    private String locationDescription;
-
-    private Boolean active = true;
-
     @ManyToOne
+    @JoinColumn(name = "zone_id")
     private Zone zone;
 
-    public Bin() {
-    }
+    @Column(nullable = false)
+    private Double capacityLiters;
 
-    public Bin(Long id, String identifier, Double capacityLiters,
-               Double latitude, Double longitude,
-               String locationDescription, Boolean active, Zone zone) {
-        this.id = id;
-        this.identifier = identifier;
-        this.capacityLiters = capacityLiters;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.locationDescription = locationDescription;
-        this.active = active;
-        this.zone = zone;
-    }
+    @Column(nullable = false)
+    private Boolean active = true;
 
-    public Long getId() {
-        return id;
-    }
+    private LocalDateTime createdAt;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+    private LocalDateTime updatedAt;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+    public Long getId() { return id; }
+    public String getIdentifier() { return identifier; }
+    public void setIdentifier(String identifier) { this.identifier = identifier; }
 
-    public Double getCapacityLiters() {
-        return capacityLiters;
-    }
+    public String getLocationDescription() { return locationDescription; }
+    public void setLocationDescription(String locationDescription) { this.locationDescription = locationDescription; }
 
-    public void setCapacityLiters(Double capacityLiters) {
-        this.capacityLiters = capacityLiters;
-    }
+    public Double getLatitude() { return latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
 
-    public Double getLatitude() {
-        return latitude;
-    }
+    public Double getLongitude() { return longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
+    public Zone getZone() { return zone; }
+    public void setZone(Zone zone) { this.zone = zone; }
 
-    public Double getLongitude() {
-        return longitude;
-    }
+    public Double getCapacityLiters() { return capacityLiters; }
+    public void setCapacityLiters(Double capacityLiters) { this.capacityLiters = capacityLiters; }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLocationDescription() {
-        return locationDescription;
-    }
-
-    public void setLocationDescription(String locationDescription) {
-        this.locationDescription = locationDescription;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Zone getZone() {
-        return zone;
-    }
-
-    public void setZone(Zone zone) {
-        this.zone = zone;
-    }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }

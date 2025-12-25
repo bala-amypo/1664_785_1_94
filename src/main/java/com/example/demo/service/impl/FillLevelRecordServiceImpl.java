@@ -39,3 +39,7 @@ public class FillLevelRecordServiceImpl implements FillLevelRecordService {
     }
 
     @Override
+    public List<FillLevelRecord> getRecentRecords(Long binId, int limit) {
+        return repository.findRecentRecords(binId, limit);
+    }
+}

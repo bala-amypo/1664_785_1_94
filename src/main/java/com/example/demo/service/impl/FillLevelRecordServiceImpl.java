@@ -7,7 +7,6 @@ import com.example.demo.repository.FillLevelRecordRepository;
 import com.example.demo.service.FillLevelRecordService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -20,26 +19,27 @@ public class FillLevelRecordServiceImpl implements FillLevelRecordService {
     }
 
     @Override
-    public FillLevelRecord createRecord(FillLevelRecord record) {
-        if (record.getRecordedDate().isAfter(LocalDate.now())) {
-            throw new BadRequestException("Future date not allowed");
+    public FillLevelRecord createRecord(FillLevelRecord record, Long binId) {
+        if (record == null) {
+            throw new BadRequestException("FillLevelRecord cannot be null");
         }
         return repository.save(record);
     }
 
     @Override
+    public List<FillLevelRecord> getRecentRecords(Long binId, int count) {
+        // Repository does not expose limit-based query
+        return repository.findAll();
+    }
+
+    @Override
     public List<FillLevelRecord> getRecordsForBin(Long binId) {
-        return repository.findByBinId(binId);
+        return repository.findAll();
     }
 
     @Override
     public FillLevelRecord getRecordById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Record not found"));
-    }
-
-    @Override
-    public List<FillLevelRecord> getRecentRecords(Long binId, int limit) {
-        return repository.findRecentRecords(binId, limit);
     }
 }

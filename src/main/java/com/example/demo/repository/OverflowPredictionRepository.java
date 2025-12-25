@@ -12,5 +12,7 @@ import java.util.Optional;
 public interface OverflowPredictionRepository {
     OverflowPrediction save(OverflowPrediction prediction);
     List<OverflowPrediction> findLatestPredictionsForZone(Zone zone);
+    List<OverflowPrediction> findByBinId(Long binId);
+
 }
 

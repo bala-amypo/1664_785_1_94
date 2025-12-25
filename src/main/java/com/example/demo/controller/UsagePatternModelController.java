@@ -33,7 +33,7 @@ public class UsagePatternModelController {
     public ResponseEntity<UsagePatternModel> create(
             @RequestBody UsagePatternModel model) {
         return ResponseEntity.ok(
-                modelService.createUsagePatternModel(model)
+                modelService.createModel(model)
         );
     }
 

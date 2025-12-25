@@ -30,13 +30,13 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
     public UsagePatternModel updateModel(Long id, UsagePatternModel model) {
         UsagePatternModel existing = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Model not found"));
-        existing.setDailyIncrease(model.getDailyIncrease());
+        existing.setDailyIncrease(model.getAvgDailyIncreaseWeekday());
         return repository.save(existing);
     }
 
     @Override
     public UsagePatternModel getModelForBin(Long binId) {
-        return repository.findTopByBinIdOrderByCreatedAtDesc(binId);
+        return repository.findTop1ByBinOrderByLastUpdatedDesc(binId);
     }
 
     @Override

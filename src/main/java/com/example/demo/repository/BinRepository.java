@@ -5,7 +5,7 @@ import com.example.demo.model.Bin;
 import com.example.demo.model.Zone;
 import java.util.Optional;
 import java.util.List;
-public interface BinRepository {
+public interface BinRepository  extends JpaRepository<Bin,Long> {
     Optional<Bin> findById(Long id);
     Optional<Bin> findByIdentifier(String identifier);
     List<Bin> findAll();

@@ -23,11 +23,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         return userRepository.save(user);
     }
-
     @Override
-    public Optional<User> getByEmail(String email) {
+    public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
 
     @Override
     public boolean exists(String email) {

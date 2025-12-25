@@ -43,7 +43,7 @@ public UsagePatternModel getUsagePatternModelById(Long id) {
 
     @Override
     public UsagePatternModel getModelForBin(Long binId) {
-        return repository.findTop1ByBinOrderByLastUpdatedDesc(binId);
+        return repository.findTopByBinIdOrderByLastUpdatedDesc(Long binId);
     }
 
     @Override

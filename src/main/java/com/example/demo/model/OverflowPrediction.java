@@ -1,28 +1,71 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "overflow_predictions")
 public class OverflowPrediction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer daysUntilFull;
+
+    private LocalDate predictedFullDate;
+
     @ManyToOne
-    @JoinColumn(name = "bin_id", nullable = false)
     private Bin bin;
 
-    @Column(nullable = false)
-    private Boolean predictedOverflow;
+    @ManyToOne
+    private UsagePatternModel modelUsed;
 
-    @Column(nullable = false)
-    private LocalDateTime predictedAt;
+    public OverflowPrediction() {
+    }
+
+    public OverflowPrediction(Long id, Integer daysUntilFull,
+                              LocalDate predictedFullDate,
+                              Bin bin, UsagePatternModel modelUsed) {
+        this.id = id;
+        this.daysUntilFull = daysUntilFull;
+        this.predictedFullDate = predictedFullDate;
+        this.bin = bin;
+        this.modelUsed = modelUsed;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Integer getDaysUntilFull() {
+        return daysUntilFull;
+    }
+
+    public void setDaysUntilFull(Integer daysUntilFull) {
+        this.daysUntilFull = daysUntilFull;
+    }
+
+    public LocalDate getPredictedFullDate() {
+        return predictedFullDate;
+    }
+
+    public void setPredictedFullDate(LocalDate predictedFullDate) {
+        this.predictedFullDate = predictedFullDate;
+    }
+
+    public Bin getBin() {
+        return bin;
+    }
+
+    public void setBin(Bin bin) {
+        this.bin = bin;
+    }
+
+    public UsagePatternModel getModelUsed() {
+        return modelUsed;
+    }
+
+    public void setModelUsed(UsagePatternModel modelUsed) {
+        this.modelUsed = modelUsed;
+    }
 }

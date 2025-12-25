@@ -10,29 +10,63 @@ public class UsagePatternModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String modelName;   
-    private String pattern;     
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Double avgDailyIncreaseWeekday;
+
+    private Double avgDailyIncreaseWeekend;
+
+    private LocalDateTime lastUpdated;
 
     @ManyToOne
     private Bin bin;
 
-    
-    public Long getId() { return id; }
+    public UsagePatternModel() {
+    }
 
-    public String getModelName() { return modelName; }
-    public void setModelName(String modelName) { this.modelName = modelName; }
+    public UsagePatternModel(Long id,
+                             Double avgDailyIncreaseWeekday,
+                             Double avgDailyIncreaseWeekend,
+                             LocalDateTime lastUpdated,
+                             Bin bin) {
+        this.id = id;
+        this.avgDailyIncreaseWeekday = avgDailyIncreaseWeekday;
+        this.avgDailyIncreaseWeekend = avgDailyIncreaseWeekend;
+        this.lastUpdated = lastUpdated;
+        this.bin = bin;
+    }
 
-    public String getPattern() { return pattern; }
-    public void setPattern(String pattern) { this.pattern = pattern; }
+    public Long getId() {
+        return id;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public Double getAvgDailyIncreaseWeekday() {
+        return avgDailyIncreaseWeekday;
+    }
 
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public void setAvgDailyIncreaseWeekday(Double avgDailyIncreaseWeekday) {
+        this.avgDailyIncreaseWeekday = avgDailyIncreaseWeekday;
+    }
 
-    public Bin getBin() { return bin; }
-    public void setBin(Bin bin) { this.bin = bin; }
+    public Double getAvgDailyIncreaseWeekend() {
+        return avgDailyIncreaseWeekend;
+    }
+
+    public void setAvgDailyIncreaseWeekend(Double avgDailyIncreaseWeekend) {
+        this.avgDailyIncreaseWeekend = avgDailyIncreaseWeekend;
+    }
+
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public Bin getBin() {
+        return bin;
+    }
+
+    public void setBin(Bin bin) {
+        this.bin = bin;
+    }
 }

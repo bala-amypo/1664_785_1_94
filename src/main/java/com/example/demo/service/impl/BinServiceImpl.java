@@ -1,10 +1,9 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Bin;
 import com.example.demo.repository.BinRepository;
 import com.example.demo.service.BinService;
-import com.example.demo.exception.ResourceNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +11,29 @@ import java.util.List;
 @Service
 public class BinServiceImpl implements BinService {
 
-    @Autowired
-    private BinRepository binRepository;
+    private final BinRepository binRepository;
+
+    public BinServiceImpl(BinRepository binRepository) {
+        this.binRepository = binRepository;
+    }
 
     @Override
     public Bin createBin(Bin bin) {
         return binRepository.save(bin);
+    }
+
+    @Override
+    public Bin updateBin(Long id, Bin bin) {
+        Bin existing = getBinById(id);
+        existing.setName(bin.getIdentifier());
+        existing.setCapacity(bin.getCapacityLiters());
+        return binRepository.save(existing);
+    }
+
+    @Override
+    public Bin getBinById(Long id) {
+        return binRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Bin not found"));
     }
 
     @Override
@@ -26,28 +42,9 @@ public class BinServiceImpl implements BinService {
     }
 
     @Override
-    public Bin getBinById(Long id) {
-        return binRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
-    }
-
-    @Override
-    public Bin updateBin(Long id, Bin bin) {
-        Bin existingBin = binRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
-
-        existingBin.setName(bin.getIdentifier());
-        existingBin.setLocation(bin.getLocationDescription());
-        existingBin.setCapacity(bin.getCapacityLiters());
-
-        return binRepository.save(existingBin);
-    }
-
-    @Override
     public void deactivateBin(Long id) {
-        Bin existingBin = binRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id: " + id));
-        existingBin.setActive(false); 
-        binRepository.save(existingBin);
+        Bin bin = getBinById(id);
+        bin.setActive(false);
+        binRepository.save(bin);
     }
 }

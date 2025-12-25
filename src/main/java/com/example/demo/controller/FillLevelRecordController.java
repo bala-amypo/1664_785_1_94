@@ -28,10 +28,15 @@ public class FillLevelRecordController {
         this.recordService = recordService;
     }
 
-    @PostMapping
-    public FillLevelRecord createeRecord(@RequestBody FillLevelRecord record) {
-        return recordService.createRecord(record);
-    }
+   @PostMapping("/bin/{binId}")
+public ResponseEntity<FillLevelRecord> createRecord(
+        @PathVariable Long binId,
+        @RequestBody FillLevelRecord record) {
+    return ResponseEntity.ok(
+            fillLevelRecordService.createRecord(record, binId)
+    );
+}
+
 
     @GetMapping("/{id}")
     public FillLevelRecord getRecordById(@PathVariable Long id) {

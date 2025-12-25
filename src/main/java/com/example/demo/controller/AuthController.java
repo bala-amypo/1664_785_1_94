@@ -39,7 +39,9 @@ public class AuthController {
             @RequestParam String email,
             @RequestParam String password) {
 
-        User user = userService.getUserByEmail(email);
+        User user = userService.getUserByEmail(email)
+        .orElseThrow(() -> new ResourceNotFoundException("Invalid email or password"));
+
 
         if (user == null || !user.getPassword().equals(password)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

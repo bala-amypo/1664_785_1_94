@@ -39,7 +39,7 @@ public class AuthController {
             @RequestParam String email,
             @RequestParam String password) {
 
-        User user = userService.getByEmail(email);
+        User user = userService.getUserByEmail(email);
 
         if (user == null || !user.getPassword().equals(password)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

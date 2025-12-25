@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OverflowPredictionRepository {
+public interface OverflowPredictionRepository extends JpaRepository<OverflowPrediction,Long>{
     OverflowPrediction save(OverflowPrediction prediction);
     List<OverflowPrediction> findLatestPredictionsForZone(Zone zone);
     List<OverflowPrediction> findByBinId(Long binId);

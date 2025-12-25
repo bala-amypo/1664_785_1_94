@@ -39,7 +39,7 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("UsagePatternModel not found"));
 
-        existing.setDailyIncrease(model.getDailyIncrease());
+        existing.setAvgDailyIncreaseWeekday(model.getAvgDailyIncreaseWeekday());
         existing.setLastUpdated(model.getLastUpdated());
 
         return repository.save(existing);

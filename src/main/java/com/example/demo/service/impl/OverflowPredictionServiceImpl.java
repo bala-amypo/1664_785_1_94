@@ -6,8 +6,8 @@ import com.example.demo.model.FillLevelRecord;
 import com.example.demo.model.OverflowPrediction;
 import com.example.demo.repository.BinRepository;
 import com.example.demo.repository.FillLevelRecordRepository;
-import com.example.demo.repository.OverFlowPredictionRepository;
-import com.example.demo.service.OverFlowPredictionService;
+import com.example.demo.repository.OverflowPredictionRepository;
+import com.example.demo.service.OverflowPredictionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +21,7 @@ import java.util.Optional;
 public class OverflowPredictionServiceImpl implements OverflowPredictionService {
 
     @Autowired
-    private OverFlowPredictionRepository predictionRepository;
+    private OverflowPredictionRepository predictionRepository;
 
     @Autowired
     private FillLevelRecordRepository recordRepository;
@@ -30,7 +30,7 @@ public class OverflowPredictionServiceImpl implements OverflowPredictionService 
     private BinRepository binRepository;
 
     @Override
-    public OverFlowPrediction generatePrediction(Long binId) {
+    public OverflowPrediction generatePrediction(Long binId) {
        
         Bin bin = binRepository.findById(binId)
                 .orElseThrow(() -> new ResourceNotFoundException("Bin not found with id " + binId));
@@ -44,7 +44,7 @@ public class OverflowPredictionServiceImpl implements OverflowPredictionService 
                 .anyMatch(r -> r.getFillPercentage() >= 90);
 
         
-        OverFlowPrediction prediction = new OverFlowPrediction();
+        OverflowPrediction prediction = new OverflowPrediction();
         prediction.setBin(bin);
         prediction.setPredictedOverflow(willOverflow);
         prediction.setPredictedAt(LocalDateTime.now());
@@ -53,22 +53,22 @@ public class OverflowPredictionServiceImpl implements OverflowPredictionService 
     }
 
     @Override
-    public OverFlowPrediction getPredictionById(Long id) {
+    public OverflowPrediction getPredictionById(Long id) {
         
         return predictionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("OverFlowPrediction not found with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("OverflowPrediction not found with id " + id));
     }
 
     @Override
-    public List<OverFlowPrediction> getPredictionsForBin(Long binId) {
+    public List<OverflowPrediction> getPredictionsForBin(Long binId) {
         
         return predictionRepository.findByBinId(binId);
     }
 
     @Override
-    public List<OverFlowPrediction> getLatestPredictionsForZone(Long zoneId) {
+    public List<OverflowPrediction> getLatestPredictionsForZone(Long zoneId) {
         
-        Optional<OverFlowPrediction> prediction = predictionRepository.findTop1ByBin_Zone_IdOrderByPredictedAtDesc(zoneId);
+        Optional<OverflowPrediction> prediction = predictionRepository.findTop1ByBin_Zone_IdOrderByPredictedAtDesc(zoneId);
 
        
         return prediction.map(List::of).orElseGet(List::of);

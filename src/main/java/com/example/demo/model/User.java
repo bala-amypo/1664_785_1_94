@@ -24,7 +24,7 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {   // ✅ REQUIRED
+    public void setName(String name) { 
         this.name = name;
     }
 
@@ -32,7 +32,7 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) { // ✅ REQUIRED
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -40,7 +40,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) { // ✅ REQUIRED
+    public void setPassword(String password) { 
         this.password = password;
     }
 }

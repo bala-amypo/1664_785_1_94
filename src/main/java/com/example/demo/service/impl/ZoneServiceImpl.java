@@ -25,7 +25,7 @@ public class ZoneServiceImpl implements ZoneService {
     @Override
     public Zone updateZone(Long id, Zone zone) {
         Zone existing = getZoneById(id);
-        existing.setName(zone.getZoneName());
+        existing.setZoneName(zone.getZoneName());
         return zoneRepository.save(existing);
     }
 

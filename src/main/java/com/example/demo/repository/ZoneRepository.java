@@ -3,6 +3,8 @@ package com.example.demo.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.Zone;
 
-public interface ZoneRepository extends JpaRepository<Zone, Long> {
-   
+public interface ZoneRepository {
+    Optional<Zone> findById(Long id);
+    Optional<Zone> findByZoneName(String name);
+    Zone save(Zone zone);
 }

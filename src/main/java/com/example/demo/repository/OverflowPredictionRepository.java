@@ -8,11 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OverflowPredictionRepository
-        extends JpaRepository<OverflowPrediction, Long> {
-
-    List<OverflowPrediction> findByBinId(Long binId);
-
-    Optional<OverflowPrediction>
-    findTop1ByBin_Zone_IdOrderByPredictedAtDesc(Long zoneId);
+public interface OverflowPredictionRepository {
+    OverflowPrediction save(OverflowPrediction prediction);
+    List<OverflowPrediction> findLatestPredictionsForZone(Zone zone);
 }
+

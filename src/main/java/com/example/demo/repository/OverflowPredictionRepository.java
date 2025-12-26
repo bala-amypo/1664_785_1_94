@@ -12,8 +12,8 @@ import java.util.Optional;
 @Repository
 public interface OverflowPredictionRepository extends JpaRepository<OverflowPrediction,Long>{
     OverflowPrediction save(OverflowPrediction prediction);
-    @Query("SELECT o FROM OverflowPrediction o WHERE o.id = :zone")
-List<OverflowPrediction> findLatestPredictionsByZone(@Param("zone") Long zone);
+   @Query("SELECT p FROM OverflowPrediction p WHERE p.bin.zone = :zone")
+List<OverflowPrediction> findLatestPredictionsForZone(@Param("zone") Zone zone);
 
 
     List<OverflowPrediction> findByBinId(Long binId);

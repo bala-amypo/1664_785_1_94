@@ -20,7 +20,7 @@ public interface FillLevelRecordRepository extends JpaRepository<FillLevelRecord
 Optional<FillLevelRecord> findTop1ByBinOrderByRecordedAtDesc(Bin bin);
 List<FillLevelRecord> findByBinAndRecordedAtBetween(
         Bin bin, java.time.LocalDateTime start, java.time.LocalDateTime end);
-    );
+    
     FillLevelRecord save(FillLevelRecord record);
     @Query("SELECT f FROM FillLevelRecord f WHERE f.bin.id = :binId ORDER BY f.recordedAt DESC")
     List<FillLevelRecord> findRecentRecords(@Param("binId") Long binId, Pageable pageable);

@@ -11,6 +11,11 @@ import java.util.List;
 
 @Service
 public class FillLevelRecordServiceImpl implements FillLevelRecordService {
+public FillLevelRecord createRecord(FillLevelRecord record);
+public java.util.List<FillLevelRecord> getRecordsForBin(Long binId);
+public FillLevelRecord getRecordById(Long id);
+public java.util.List<FillLevelRecord> getRecentRecords(Long binId, int limit);
+
 
     private final FillLevelRecordRepository repository;
 

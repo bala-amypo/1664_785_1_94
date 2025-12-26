@@ -11,12 +11,6 @@ import java.util.List;
 @Service
 public class ZoneServiceImpl implements ZoneService {
 
-public Zone createZone(Zone zone);
-public Zone updateZone(Long id, Zone zone);
-public Zone getZoneById(Long id);
-public java.util.List<Zone> getAllZones();
-public void deactivateZone(Long id);
-
     private final ZoneRepository zoneRepository;
 
     public ZoneServiceImpl(ZoneRepository zoneRepository) {

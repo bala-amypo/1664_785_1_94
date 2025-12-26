@@ -12,12 +12,6 @@ import java.util.List;
 
 @Service
 public class UsagePatternModelServiceImpl implements UsagePatternModelService {
-public UsagePatternModel createModel(UsagePatternModel model);
-public UsagePatternModel updateModel(Long id, UsagePatternModel model);
-public UsagePatternModel getModelForBin(Long binId);
-public java.util.List<UsagePatternModel> getAllModels();
-
-
     private final UsagePatternModelRepository repository;
     private final BinRepository binRepository;
 

@@ -11,12 +11,6 @@ import java.util.List;
 @Service
 public class BinServiceImpl implements BinService {
 
-public Bin createBin(Bin bin);
-public Bin updateBin(Long id, Bin bin);
-public Bin getBinById(Long id);
-public java.util.List<Bin> getAllBins();
-public void deactivateBin(Long id);
-
     private final BinRepository binRepository;
 
     public BinServiceImpl(BinRepository binRepository) {

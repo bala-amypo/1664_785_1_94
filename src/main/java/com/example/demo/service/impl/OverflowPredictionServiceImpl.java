@@ -12,11 +12,6 @@ import java.util.List;
 @Service
 public class OverflowPredictionServiceImpl implements OverflowPredictionService {
 
-public OverflowPrediction generatePrediction(Long binId);
-public OverflowPrediction getPredictionById(Long id);
-public java.util.List<OverflowPrediction> getPredictionsForBin(Long binId);
-public java.util.List<OverflowPrediction> getLatestPredictionsForZone(Long zoneId);
-
     private final OverflowPredictionRepository repository;
 
     public OverflowPredictionServiceImpl(OverflowPredictionRepository repository) {

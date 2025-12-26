@@ -14,8 +14,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User saveUser(String name, String email, String username,
-                         String password, String role) {
+    public User registerUser(String name, String email, String password) {
 
         if (userRepository.existsByEmail(email)) {
             throw new RuntimeException("Email already exists");
@@ -24,9 +23,9 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(name);
         user.setEmail(email);
-        user.setUsername(username);
+        user.setUsername(email); // username = email
         user.setPassword(password);
-        user.setRole(role);
+        user.setRole("USER");
 
         return userRepository.save(user);
     }

@@ -1,53 +1,33 @@
 package com.example.demo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import com.example.demo.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import com.example.demo.exception.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }
-
-    
     @PostMapping("/register")
     public ResponseEntity<User> register(
-            @RequestParam String fullName,
+            @RequestParam String name,
             @RequestParam String email,
             @RequestParam String password) {
 
-        User user = userService.registerUser(fullName, email, password);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        User user = userService.registerUser(name, email, password);
+        return ResponseEntity.ok(user);
     }
 
-    // POST /auth/login
-    @PostMapping("/login")
-    public ResponseEntity<User> login(
-            @RequestParam String email,
-            @RequestParam String password) {
+    @GetMapping("/user")
+    public ResponseEntity<User> getUser(@RequestParam String email) {
 
-        User user = userService.getUserByEmail(email)
-        .orElseThrow(() -> new ResourceNotFoundException("Invalid email or password"));
-
-
-        if (user == null || !user.getPassword().equals(password)) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
+        User user = userService.getUserByEmail(email);
         return ResponseEntity.ok(user);
     }
 }

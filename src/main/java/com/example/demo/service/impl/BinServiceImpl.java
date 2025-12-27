@@ -2,18 +2,18 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.Bin;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 @Service
 public class BinServiceImpl {
 
     private final Map<Long, Bin> bins = new HashMap<>();
-    private Long counter = 1L;
+    private long counter = 1L;
 
     public Bin createBin(Bin bin) {
-        bin.setActive(true);
         bins.put(counter, bin);
-        bin.setName(bin.getName());
+        counter++;
         return bin;
     }
 

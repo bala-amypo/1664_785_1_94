@@ -4,7 +4,14 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class UsagePatternModel {
+public UsagePatternModel createModel(UsagePatternModel model, Long binId) {
+    Bin bin = binRepository.findById(binId)
+            .orElseThrow(() -> new RuntimeException("Bin not found"));
+    model.setBin(bin);
+    model.setLastUpdated(LocalDateTime.now());
+    return modelRepository.save(model);
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,4 +76,5 @@ public class UsagePatternModel {
     public void setBin(Bin bin) {
         this.bin = bin;
     }
+
 }

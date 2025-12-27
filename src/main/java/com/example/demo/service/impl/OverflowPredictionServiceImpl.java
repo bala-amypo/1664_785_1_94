@@ -34,4 +34,13 @@ public class OverflowPredictionServiceImpl
       
         return repository.save(prediction);
     }
+@Override
+public OverflowPrediction getPredictionById(Long id) {
+    return repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Prediction not found"));
 }
+
+
+
+}
+

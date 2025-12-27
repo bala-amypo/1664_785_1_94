@@ -1,41 +1,43 @@
-package com.example.demo.service.impl;
+package com.example.demo.controller;
 
 import com.example.demo.model.Bin;
-import org.springframework.stereotype.Service;
+import com.example.demo.service.impl.BinServiceImpl;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
 
-@Service
-public class BinServiceImpl {
+@RestController
+@RequestMapping("/bins")
+public class BinController {
 
-    private final Map<Long, Bin> bins = new HashMap<>();
-    private long counter = 1L;
+    private final BinServiceImpl binService;
 
-    public Bin createBin(Bin bin) {
-        bins.put(counter, bin);
-        counter++;
-        return bin;
+    public BinController(BinServiceImpl binService) {
+        this.binService = binService;
     }
 
-    public Bin getBinById(Long id) {
-        return bins.get(id);
+    @PostMapping
+    public Bin createBin(@RequestBody Bin bin) {
+        return binService.createBin(bin);
     }
 
+    @GetMapping("/{id}")
+    public Bin getBin(@PathVariable Long id) {
+        return binService.getBinById(id);
+    }
+
+    @GetMapping
     public List<Bin> getAllBins() {
-        return new ArrayList<>(bins.values());
+        return binService.getAllBins();
     }
 
-    public Bin updateBin(Long id, Bin updated) {
-        Bin existing = bins.get(id);
-        if (existing != null) {
-            existing.setName(updated.getName());
-            existing.setCapacity(updated.getCapacity());
-        }
-        return existing;
+    @PutMapping("/{id}")
+    public Bin updateBin(@PathVariable Long id, @RequestBody Bin bin) {
+        return binService.updateBin(id, bin);
     }
 
-    public void deactivateBin(Long id) {
-        Bin bin = bins.get(id);
-        if (bin != null) bin.setActive(false);
+    @DeleteMapping("/{id}")
+    public void deactivateBin(@PathVariable Long id) {
+        binService.deactivateBin(id);
     }
 }

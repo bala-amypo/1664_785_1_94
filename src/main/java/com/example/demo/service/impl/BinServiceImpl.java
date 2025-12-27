@@ -7,8 +7,14 @@ import java.util.*;
 @Service
 public class BinServiceImpl {
 
-    private final Map<Long, Bin> bins = new HashMap<>();
-    private long counter = 1;
+@RestController
+@RequestMapping("/bins")
+public class BinController {
+    private final BinServiceImpl binService;
+    public BinController(BinServiceImpl binService) {
+        this.binService = binService;
+    }
+
 
     public Bin createBin(Bin bin) {
         bins.put(counter, bin);

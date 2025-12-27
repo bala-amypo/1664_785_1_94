@@ -84,4 +84,12 @@
             </plugin>
         </plugins>
     </build>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="BinOverflowPredictorTestSuite" verbose="1">
+    <test name="AllTests">
+        <classes>
+            <class name="com.example.demo.BinOverflowPredictorTestNGTests"/>
+        </classes>
+    </test>
+</suite>
 </project>

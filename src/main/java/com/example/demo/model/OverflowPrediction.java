@@ -13,7 +13,7 @@ public class OverflowPrediction {
 
     private LocalDateTime predictionTime;
 
-    // getters & setters
+  
     public LocalDateTime getPredictionTime() {
         return predictionTime;
     }

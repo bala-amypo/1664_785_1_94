@@ -20,12 +20,10 @@
 // }
 package com.example.demo.security;
 
-import io.jsonwebtoken.*;
-import org.springframework.stereotype.Component;
-
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 
-@Component
 public class JwtTokenProvider {
     
     private String jwtSecret = "testSecretKeyThatIsAtLeast32CharactersLong!";
@@ -39,8 +37,7 @@ public class JwtTokenProvider {
         this.jwtExpirationInMs = expiration;
     }
     
-    public String generateToken(org.springframework.security.core.Authentication authentication) {
-        String username = authentication.getName();
+    public String generateToken(String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
         
@@ -53,19 +50,18 @@ public class JwtTokenProvider {
     }
     
     public String getUsernameFromToken(String token) {
-        Claims claims = Jwts.parser()
+        return Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
-                .getBody();
-        return claims.getSubject();
+                .getBody()
+                .getSubject();
     }
     
     public boolean validateToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
-        } catch (SignatureException | MalformedJwtException | ExpiredJwtException | 
-                 UnsupportedJwtException | IllegalArgumentException ex) {
+        } catch (Exception ex) {
             return false;
         }
     }

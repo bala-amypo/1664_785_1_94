@@ -12,14 +12,13 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.Bin;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-public interface BinRepository extends JpaRepository<Bin, Long> {
+public interface BinRepository {
+    Bin save(Bin bin);
+    List<Bin> findAll();
+    Optional<Bin> findById(Long id);
+    void deleteById(Long id);
     List<Bin> findByCurrentFillLevelGreaterThanEqual(Double fillLevel);
-    List<Bin> findByZoneId(Long zoneId);
 }

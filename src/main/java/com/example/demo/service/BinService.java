@@ -18,8 +18,9 @@ import java.util.List;
 
 public interface BinService {
     Bin createBin(Bin bin);
-    Bin getBinById(Long id);
     List<Bin> getAllBins();
-    Bin updateBin(Long id, Bin bin);
+    Optional<Bin> getBinById(Long id);
+    Bin updateBinFillLevel(Long binId, Double newFillLevel);
     void deleteBin(Long id);
+    List<Bin> getBinsNeedingCollection();
 }

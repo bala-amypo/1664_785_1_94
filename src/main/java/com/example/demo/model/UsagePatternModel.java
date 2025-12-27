@@ -4,22 +4,13 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public UsagePatternModel createModel(UsagePatternModel model, Long binId) {
-    Bin bin = binRepository.findById(binId)
-            .orElseThrow(() -> new RuntimeException("Bin not found"));
-    model.setBin(bin);
-    model.setLastUpdated(LocalDateTime.now());
-    return modelRepository.save(model);
-
-
+public class UsagePatternModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double avgDailyIncreaseWeekday;
-
-    private Double avgDailyIncreaseWeekend;
+    private double averageDailyIncrease;
 
     private LocalDateTime lastUpdated;
 
@@ -29,36 +20,16 @@ public UsagePatternModel createModel(UsagePatternModel model, Long binId) {
     public UsagePatternModel() {
     }
 
-    public UsagePatternModel(Long id,
-                             Double avgDailyIncreaseWeekday,
-                             Double avgDailyIncreaseWeekend,
-                             LocalDateTime lastUpdated,
-                             Bin bin) {
-        this.id = id;
-        this.avgDailyIncreaseWeekday = avgDailyIncreaseWeekday;
-        this.avgDailyIncreaseWeekend = avgDailyIncreaseWeekend;
-        this.lastUpdated = lastUpdated;
-        this.bin = bin;
-    }
-
     public Long getId() {
         return id;
     }
 
-    public Double getAvgDailyIncreaseWeekday() {
-        return avgDailyIncreaseWeekday;
+    public double getAverageDailyIncrease() {
+        return averageDailyIncrease;
     }
 
-    public void setAvgDailyIncreaseWeekday(Double avgDailyIncreaseWeekday) {
-        this.avgDailyIncreaseWeekday = avgDailyIncreaseWeekday;
-    }
-
-    public Double getAvgDailyIncreaseWeekend() {
-        return avgDailyIncreaseWeekend;
-    }
-
-    public void setAvgDailyIncreaseWeekend(Double avgDailyIncreaseWeekend) {
-        this.avgDailyIncreaseWeekend = avgDailyIncreaseWeekend;
+    public void setAverageDailyIncrease(double averageDailyIncrease) {
+        this.averageDailyIncrease = averageDailyIncrease;
     }
 
     public LocalDateTime getLastUpdated() {
@@ -76,5 +47,4 @@ public UsagePatternModel createModel(UsagePatternModel model, Long binId) {
     public void setBin(Bin bin) {
         this.bin = bin;
     }
-
 }

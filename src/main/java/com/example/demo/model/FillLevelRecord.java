@@ -4,42 +4,47 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "fill_level_records")
-public FillLevelRecord createRecord(FillLevelRecord record, Long binId) {
-    Bin bin = binRepository.findById(binId)
-            .orElseThrow(() -> new RuntimeException("Bin not found"));
-    record.setBin(bin);
-    return recordRepository.save(record);
-}
+public class FillLevelRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "bin_id", nullable = false)
-    private Bin bin;
+    private int fillPercentage;
 
-    @Column(nullable = false)
-    private Double fillPercentage;
-
-    @Column(nullable = false)
     private LocalDateTime recordedAt;
 
-    @Column(nullable = false)
-    private Boolean isWeekend;
+    @ManyToOne
+    private Bin bin;
 
-    public Long getId() { return id; }
+    public FillLevelRecord() {
+    }
 
-    public Bin getBin() { return bin; }
-    public void setBin(Bin bin) { this.bin = bin; }
+    public Long getId() {
+        return id;
+    }
 
-    public Double getFillPercentage() { return fillPercentage; }
-    public void setFillPercentage(Double fillPercentage) { this.fillPercentage = fillPercentage; }
+    public int getFillPercentage() {
+        return fillPercentage;
+    }
 
-    public LocalDateTime getRecordedAt() { return recordedAt; }
-    public void setRecordedAt(LocalDateTime recordedAt) { this.recordedAt = recordedAt; }
+    public void setFillPercentage(int fillPercentage) {
+        this.fillPercentage = fillPercentage;
+    }
 
-    public Boolean getIsWeekend() { return isWeekend; }
-    public void setIsWeekend(Boolean isWeekend) { this.isWeekend = isWeekend; }
+    public LocalDateTime getRecordedAt() {
+        return recordedAt;
+    }
+
+    public void setRecordedAt(LocalDateTime recordedAt) {
+        this.recordedAt = recordedAt;
+    }
+
+    public Bin getBin() {
+        return bin;
+    }
+
+    public void setBin(Bin bin) {
+        this.bin = bin;
+    }
 }

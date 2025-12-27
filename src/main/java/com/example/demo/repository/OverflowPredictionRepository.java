@@ -9,9 +9,7 @@ import com.example.demo.model.OverflowPrediction;
 public interface OverflowPredictionRepository
         extends JpaRepository<OverflowPrediction, Long> {
 
-    
     List<OverflowPrediction> findByBinId(Long binId);
 
-   
     List<OverflowPrediction> findByZoneIdOrderByPredictionTimeDesc(Long zoneId);
 }

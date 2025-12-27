@@ -11,7 +11,16 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService {
+
+    public DemoUser getByEmail(String email) {
+        return new DemoUser();
+    }
+
+    public DemoUser registerUser(String name, String email, String password) {
+        return new DemoUser();
+    }
+
 
     @Autowired
     private UserRepository userRepository;
@@ -25,7 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                         new UsernameNotFoundException("User not found: " + email));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),          // username for Spring Security
+                user.getEmail(),         
                 user.getPassword(),
                 Collections.singleton(
                         new SimpleGrantedAuthority("ROLE_" + user.getRole())

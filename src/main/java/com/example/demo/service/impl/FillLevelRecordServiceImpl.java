@@ -6,6 +6,8 @@ import com.example.demo.repository.BinRepository;
 import com.example.demo.repository.FillLevelRecordRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FillLevelRecordServiceImpl {
 
@@ -23,5 +25,14 @@ public class FillLevelRecordServiceImpl {
                 .orElseThrow(() -> new RuntimeException("Bin not found"));
         record.setBin(bin);
         return recordRepository.save(record);
+    }
+
+    public FillLevelRecord getRecordById(Long id) {
+        return recordRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Record not found"));
+    }
+
+    public List<FillLevelRecord> getRecentRecords(Long binId, int limit) {
+        return recordRepository.findTopByBinIdOrderByRecordedAtDesc(binId, limit);
     }
 }

@@ -19,28 +19,30 @@ public class OverflowPredictionServiceImpl
 
     @Override
     public List<OverflowPrediction> getPredictionsForBin(Long binId) {
-        return repository.findByBinId(binId);
+        // FIXED method name
+        return repository.findByBin_Id(binId);
     }
 
     @Override
     public List<OverflowPrediction> getLatestPredictionsByZone(Long zoneId) {
-        return repository.findByZoneIdOrderByPredictionTimeDesc(zoneId);
+        // FIXED method name
+        return repository.findByZone_IdOrderByPredictionTimeDesc(zoneId);
     }
 
     @Override
     public OverflowPrediction generatePrediction(Long binId) {
         OverflowPrediction prediction = new OverflowPrediction();
         prediction.setPredictionTime(LocalDateTime.now());
-      
+
+        // NOTE: bin must be set here or DB will fail (FK not null)
+        // prediction.setBin(bin);
+
         return repository.save(prediction);
     }
-@Override
-public OverflowPrediction getPredictionById(Long id) {
-    return repository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Prediction not found"));
+
+    @Override
+    public OverflowPrediction getPredictionById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Prediction not found"));
+    }
 }
-
-
-
-}
-

@@ -1,14 +1,60 @@
+// package com.example.demo.service.impl;
+
+// import org.springframework.stereotype.Service;
+// import com.example.demo.model.Bin;
+// import com.example.demo.repository.BinRepository;
+
+// import java.util.List;
+// import java.util.Optional;
+
+// @Service // Correct annotation for services
+// public class BinServiceImpl {
+
+//     private final BinRepository binRepository;
+
+//     public BinServiceImpl(BinRepository binRepository) {
+//         this.binRepository = binRepository;
+//     }
+
+//     public Bin createBin(Bin bin) {
+//         return binRepository.save(bin);
+//     }
+
+//     public Optional<Bin> getBinById(Long id) {
+//         return binRepository.findById(id);
+//     }
+
+//     public List<Bin> getAllBins() {
+//         return binRepository.findAll();
+//     }
+
+//     public Bin updateBin(Long id, Bin updated) {
+//         Bin existing = binRepository.findById(id)
+//                 .orElseThrow(() -> new RuntimeException("Bin not found"));
+//         existing.setName(updated.getName());
+//         existing.setCapacity(updated.getCapacity());
+//         return binRepository.save(existing);
+//     }
+
+//     public void deactivateBin(Long id) {
+//         Bin existing = binRepository.findById(id)
+//                 .orElseThrow(() -> new RuntimeException("Bin not found"));
+//         existing.setActive(false);
+//         binRepository.save(existing);
+//     }
+// }
 package com.example.demo.service.impl;
 
-import org.springframework.stereotype.Service;
 import com.example.demo.model.Bin;
 import com.example.demo.repository.BinRepository;
+import com.example.demo.service.BinService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service // Correct annotation for services
-public class BinServiceImpl {
+@Service
+public class BinServiceImpl implements BinService {
 
     private final BinRepository binRepository;
 
@@ -16,30 +62,32 @@ public class BinServiceImpl {
         this.binRepository = binRepository;
     }
 
+    @Override
     public Bin createBin(Bin bin) {
         return binRepository.save(bin);
     }
 
-    public Optional<Bin> getBinById(Long id) {
-        return binRepository.findById(id);
+    @Override
+    public Bin getBinById(Long id) {
+        return binRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bin not found with id " + id));
     }
 
+    @Override
     public List<Bin> getAllBins() {
         return binRepository.findAll();
     }
 
-    public Bin updateBin(Long id, Bin updated) {
-        Bin existing = binRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bin not found"));
-        existing.setName(updated.getName());
-        existing.setCapacity(updated.getCapacity());
-        return binRepository.save(existing);
+    @Override
+    public Bin updateBin(Long id, Bin updatedBin) {
+        Bin bin = getBinById(id);
+        bin.setName(updatedBin.getName());
+        bin.setCapacity(updatedBin.getCapacity());
+        return binRepository.save(bin);
     }
 
-    public void deactivateBin(Long id) {
-        Bin existing = binRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bin not found"));
-        existing.setActive(false);
-        binRepository.save(existing);
+    @Override
+    public void deleteBin(Long id) {
+        binRepository.deleteById(id);
     }
 }

@@ -48,6 +48,7 @@ package com.example.demo.service.impl;
 import com.example.demo.model.Bin;
 import com.example.demo.repository.BinRepository;
 import com.example.demo.service.BinService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,39 +56,44 @@ import java.util.Optional;
 
 @Service
 public class BinServiceImpl implements BinService {
-
+    
     private final BinRepository binRepository;
-
+    
+    @Autowired
     public BinServiceImpl(BinRepository binRepository) {
         this.binRepository = binRepository;
     }
-
+    
     @Override
     public Bin createBin(Bin bin) {
         return binRepository.save(bin);
     }
-
-    @Override
-    public Bin getBinById(Long id) {
-        return binRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bin not found with id " + id));
-    }
-
+    
     @Override
     public List<Bin> getAllBins() {
         return binRepository.findAll();
     }
-
+    
     @Override
-    public Bin updateBin(Long id, Bin updatedBin) {
-        Bin bin = getBinById(id);
-        bin.setName(updatedBin.getName());
-        bin.setCapacity(updatedBin.getCapacity());
-        return binRepository.save(bin);
+    public Optional<Bin> getBinById(Long id) {
+        return binRepository.findById(id);
     }
-
+    
+    @Override
+    public Bin updateBinFillLevel(Long binId, Double newFillLevel) {
+        return binRepository.findById(binId).map(bin -> {
+            bin.setCurrentFillLevel(newFillLevel);
+            return binRepository.save(bin);
+        }).orElseThrow(() -> new RuntimeException("Bin not found"));
+    }
+    
     @Override
     public void deleteBin(Long id) {
         binRepository.deleteById(id);
+    }
+    
+    @Override
+    public List<Bin> getBinsNeedingCollection() {
+        return binRepository.findByCurrentFillLevelGreaterThanEqual(80.0);
     }
 }

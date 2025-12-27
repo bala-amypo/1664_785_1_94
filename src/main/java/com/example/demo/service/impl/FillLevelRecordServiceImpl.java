@@ -4,35 +4,34 @@ import com.example.demo.model.Bin;
 import com.example.demo.model.FillLevelRecord;
 import com.example.demo.repository.BinRepository;
 import com.example.demo.repository.FillLevelRecordRepository;
+import com.example.demo.service.FillLevelRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class FillLevelRecordServiceImpl {
-
-    private final FillLevelRecordRepository recordRepository;
+public class FillLevelRecordServiceImpl implements FillLevelRecordService {
+    
+    private final FillLevelRecordRepository fillLevelRecordRepository;
     private final BinRepository binRepository;
-
-    public FillLevelRecordServiceImpl(FillLevelRecordRepository recordRepository,
+    
+    @Autowired
+    public FillLevelRecordServiceImpl(FillLevelRecordRepository fillLevelRecordRepository,
                                       BinRepository binRepository) {
-        this.recordRepository = recordRepository;
+        this.fillLevelRecordRepository = fillLevelRecordRepository;
         this.binRepository = binRepository;
     }
-
-    public FillLevelRecord createRecord(FillLevelRecord record, Long binId) {
+    
+    @Override
+    public FillLevelRecord createRecord(FillLevelRecord record) {
+        return fillLevelRecordRepository.save(record);
+    }
+    
+    @Override
+    public List<FillLevelRecord> getRecordsByBinId(Long binId) {
         Bin bin = binRepository.findById(binId)
                 .orElseThrow(() -> new RuntimeException("Bin not found"));
-        record.setBin(bin);
-        return recordRepository.save(record);
-    }
-
-    public FillLevelRecord getRecordById(Long id) {
-        return recordRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Record not found"));
-    }
-
-    public List<FillLevelRecord> getRecentRecords(Long binId, int limit) {
-        return recordRepository.findTopByBinIdOrderByRecordedAtDesc(binId, limit);
+        return fillLevelRecordRepository.findByBin(bin);
     }
 }

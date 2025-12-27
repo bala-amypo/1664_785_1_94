@@ -16,11 +16,13 @@
 package com.example.demo.service;
 
 import com.example.demo.model.OverflowPrediction;
+
 import java.util.List;
 
 public interface OverflowPredictionService {
-
-    OverflowPrediction savePrediction(OverflowPrediction prediction);
-
-    List<OverflowPrediction> getAllPredictions();
+    OverflowPrediction createPrediction(OverflowPrediction prediction);
+    List<OverflowPrediction> getPredictionsByBinId(Long binId);
+    List<OverflowPrediction> getLatestPredictionsForZone(Long zoneId);
+    OverflowPrediction predictOverflowForBin(Long binId);
+    Double calculateFillRate(com.example.demo.model.Bin bin);
 }

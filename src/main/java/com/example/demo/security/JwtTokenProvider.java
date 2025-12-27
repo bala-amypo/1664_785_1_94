@@ -21,25 +21,15 @@
 package com.example.demo.security;
 
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
     
-    @Value("${jwt.secret:defaultSecretKeyThatIsAtLeast32CharactersLong!}")
-    private String jwtSecret;
-    
-    @Value("${jwt.expiration:3600000}")
-    private long jwtExpirationInMs;
+    private String jwtSecret = "testSecretKeyThatIsAtLeast32CharactersLong!";
+    private long jwtExpirationInMs = 3600000;
     
     public void setJwtSecret(String secret) {
         this.jwtSecret = secret;
@@ -49,7 +39,7 @@ public class JwtTokenProvider {
         this.jwtExpirationInMs = expiration;
     }
     
-    public String generateToken(Authentication authentication) {
+    public String generateToken(org.springframework.security.core.Authentication authentication) {
         String username = authentication.getName();
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);

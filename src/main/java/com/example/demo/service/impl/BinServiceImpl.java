@@ -1,9 +1,8 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Bin;
 import com.example.demo.repository.BinRepository;
-import com.example.demo.service.BinService;
+import com.example.demo.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,37 +18,17 @@ public class BinServiceImpl {
         this.binRepository = binRepository;
         this.zoneRepository = zoneRepository;
     }
-}
 
-
-    @Override
-    public Bin createBin(Bin bin) {
+    public Bin save(Bin bin) {
         return binRepository.save(bin);
     }
 
-    @Override
-    public Bin updateBin(Long id, Bin bin) {
-        Bin existing = getBinById(id);
-        existing.setIdentifier(bin.getIdentifier());
-        existing.setCapacityLiters(bin.getCapacityLiters());
-        return binRepository.save(existing);
-    }
-
-    @Override
-    public Bin getBinById(Long id) {
-        return binRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Bin not found"));
-    }
-
-    @Override
-    public List<Bin> getAllBins() {
+    public List<Bin> findAll() {
         return binRepository.findAll();
     }
 
-    @Override
-    public void deactivateBin(Long id) {
-        Bin bin = getBinById(id);
-        bin.setActive(false);
-        binRepository.save(bin);
+    public Bin findById(Long id) {
+        return binRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bin not found"));
     }
 }

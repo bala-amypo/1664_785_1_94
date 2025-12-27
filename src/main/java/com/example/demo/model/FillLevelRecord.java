@@ -5,7 +5,12 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "fill_level_records")
-public class FillLevelRecord {
+public FillLevelRecord createRecord(FillLevelRecord record, Long binId) {
+    Bin bin = binRepository.findById(binId)
+            .orElseThrow(() -> new RuntimeException("Bin not found"));
+    record.setBin(bin);
+    return recordRepository.save(record);
+}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

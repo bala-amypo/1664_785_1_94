@@ -10,12 +10,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FillLevelRecordServiceImpl implements FillLevelRecordService {
-    private final FillLevelRecordRepository repository;
+public class FillLevelRecordServiceImpl {
 
-    public FillLevelRecordServiceImpl(FillLevelRecordRepository repository) {
-        this.repository = repository;
+    private final FillLevelRecordRepository recordRepository;
+    private final BinRepository binRepository;
+
+    public FillLevelRecordServiceImpl(FillLevelRecordRepository recordRepository,
+                                      BinRepository binRepository) {
+        this.recordRepository = recordRepository;
+        this.binRepository = binRepository;
     }
+}
 
     @Override
     public FillLevelRecord createRecord(FillLevelRecord record, Long binId) {

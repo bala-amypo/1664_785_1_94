@@ -1,8 +1,9 @@
 package com.example.demo.controller;
 
+import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.Bin;
 import com.example.demo.service.impl.BinServiceImpl;
-import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -21,8 +22,10 @@ public class BinController {
     }
 
     @GetMapping("/{id}")
-    public Bin getBin(@PathVariable Long id) {
-        return binService.getBinById(id);
+    public Bin getBinById(@PathVariable Long id) {
+        // Unwrap Optional here
+        return binService.getBinById(id)
+                .orElseThrow(() -> new RuntimeException("Bin not found"));
     }
 
     @GetMapping
@@ -31,8 +34,8 @@ public class BinController {
     }
 
     @PutMapping("/{id}")
-    public Bin updateBin(@PathVariable Long id, @RequestBody Bin bin) {
-        return binService.updateBin(id, bin);
+    public Bin updateBin(@PathVariable Long id, @RequestBody Bin updated) {
+        return binService.updateBin(id, updated);
     }
 
     @DeleteMapping("/{id}")

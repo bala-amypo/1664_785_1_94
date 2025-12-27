@@ -1,50 +1,41 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "fill_level_records")
 public class FillLevelRecord {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private int fillPercentage;
-
+    
+    private Double fillLevel;
     private LocalDateTime recordedAt;
-
+    
     @ManyToOne
+    @JoinColumn(name = "bin_id")
     private Bin bin;
-
-    public FillLevelRecord() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public int getFillPercentage() {
-        return fillPercentage;
-    }
-
-    public void setFillPercentage(int fillPercentage) {
-        this.fillPercentage = fillPercentage;
-    }
-
-    public LocalDateTime getRecordedAt() {
-        return recordedAt;
-    }
-
-    public void setRecordedAt(LocalDateTime recordedAt) {
+    
+    // Constructors
+    public FillLevelRecord() {}
+    
+    public FillLevelRecord(Double fillLevel, LocalDateTime recordedAt, Bin bin) {
+        this.fillLevel = fillLevel;
         this.recordedAt = recordedAt;
-    }
-
-    public Bin getBin() {
-        return bin;
-    }
-
-    public void setBin(Bin bin) {
         this.bin = bin;
     }
+    
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    
+    public Double getFillLevel() { return fillLevel; }
+    public void setFillLevel(Double fillLevel) { this.fillLevel = fillLevel; }
+    
+    public LocalDateTime getRecordedAt() { return recordedAt; }
+    public void setRecordedAt(LocalDateTime recordedAt) { this.recordedAt = recordedAt; }
+    
+    public Bin getBin() { return bin; }
+    public void setBin(Bin bin) { this.bin = bin; }
 }

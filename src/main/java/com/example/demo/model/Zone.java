@@ -66,11 +66,33 @@ public class Zone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String zoneName;   // ✅ added
 
-    public Long getId() { return id; }
-    public String getName() { return name; }
+    private boolean active;    // ✅ added
 
-    public void setId(Long id) { this.id = id; }
-    public void setName(String name) { this.name = name; }
+    // getters
+    public Long getId() {
+        return id;
+    }
+
+    public String getZoneName() {
+        return zoneName;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    // setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

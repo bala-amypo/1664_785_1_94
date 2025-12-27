@@ -1,60 +1,59 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "bins", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "identifier")
-})
 public class Bin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String identifier;
+    private String name;
 
-    private String locationDescription;
+    private int capacity;
 
-    private Double latitude;
-
-    private Double longitude;
+    private boolean active = true;
 
     @ManyToOne
-    @JoinColumn(name = "zone_id")
     private Zone zone;
 
-    @Column(nullable = false)
-    private Double capacityLiters;
+    public Bin() {
+    }
 
-    @Column(nullable = false)
-    private Boolean active = true;
+    public Long getId() {
+        return id;
+    }
 
-    private LocalDateTime createdAt;
+    public String getName() {
+        return name;
+    }
 
-    private LocalDateTime updatedAt;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public Long getId() { return id; }
-    public String getIdentifier() { return identifier; }
-    public void setIdentifier(String identifier) { this.identifier = identifier; }
+    public int getCapacity() {
+        return capacity;
+    }
 
-    public String getLocationDescription() { return locationDescription; }
-    public void setLocationDescription(String locationDescription) { this.locationDescription = locationDescription; }
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
 
-    public Double getLatitude() { return latitude; }
-    public void setLatitude(Double latitude) { this.latitude = latitude; }
+    public boolean isActive() {
+        return active;
+    }
 
-    public Double getLongitude() { return longitude; }
-    public void setLongitude(Double longitude) { this.longitude = longitude; }
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-    public Zone getZone() { return zone; }
-    public void setZone(Zone zone) { this.zone = zone; }
+    public Zone getZone() {
+        return zone;
+    }
 
-    public Double getCapacityLiters() { return capacityLiters; }
-    public void setCapacityLiters(Double capacityLiters) { this.capacityLiters = capacityLiters; }
-
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    public void setZone(Zone zone) {
+        this.zone = zone;
+    }
 }

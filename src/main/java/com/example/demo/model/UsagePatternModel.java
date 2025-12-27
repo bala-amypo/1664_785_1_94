@@ -10,18 +10,25 @@ public class UsagePatternModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long binId;
+
     private double averageDailyIncrease;
 
     private LocalDateTime lastUpdated;
-
-    @ManyToOne
-    private Bin bin;
 
     public UsagePatternModel() {
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Long getBinId() {
+        return binId;
+    }
+
+    public void setBinId(Long binId) {
+        this.binId = binId;
     }
 
     public double getAverageDailyIncrease() {
@@ -32,19 +39,16 @@ public class UsagePatternModel {
         this.averageDailyIncrease = averageDailyIncrease;
     }
 
+    // ✅ ADD THIS GETTER (fixes your compilation error)
+    public double getAvgDailyIncreaseWeekday() {
+        return averageDailyIncrease;
+    }
+
     public LocalDateTime getLastUpdated() {
         return lastUpdated;
     }
 
     public void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
-    }
-
-    public Bin getBin() {
-        return bin;
-    }
-
-    public void setBin(Bin bin) {
-        this.bin = bin;
     }
 }

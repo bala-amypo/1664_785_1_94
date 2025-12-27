@@ -1,46 +1,45 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.Bin;
 import org.springframework.stereotype.Service;
-import java.util.*;
+import com.example.demo.model.Bin;
+import com.example.demo.repository.BinRepository;
 
-@Service
+import java.util.List;
+import java.util.Optional;
+
+@Service // Correct annotation for services
 public class BinServiceImpl {
 
-@RestController
-@RequestMapping("/bins")
-public class BinController {
-    private final BinServiceImpl binService;
-    public BinController(BinServiceImpl binService) {
-        this.binService = binService;
-    }
+    private final BinRepository binRepository;
 
+    public BinServiceImpl(BinRepository binRepository) {
+        this.binRepository = binRepository;
+    }
 
     public Bin createBin(Bin bin) {
-        bins.put(counter, bin);
-        counter++;
-        return bin;
+        return binRepository.save(bin);
     }
 
-    public Bin getBinById(Long id) {
-        return bins.get(id);
+    public Optional<Bin> getBinById(Long id) {
+        return binRepository.findById(id);
     }
 
     public List<Bin> getAllBins() {
-        return new ArrayList<>(bins.values());
+        return binRepository.findAll();
     }
 
     public Bin updateBin(Long id, Bin updated) {
-        Bin existing = bins.get(id);
-        if (existing != null) {
-            existing.setName(updated.getName());
-            existing.setCapacity(updated.getCapacity());
-        }
-        return existing;
+        Bin existing = binRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bin not found"));
+        existing.setName(updated.getName());
+        existing.setCapacity(updated.getCapacity());
+        return binRepository.save(existing);
     }
 
     public void deactivateBin(Long id) {
-        Bin bin = bins.get(id);
-        if (bin != null) bin.setActive(false);
+        Bin existing = binRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bin not found"));
+        existing.setActive(false);
+        binRepository.save(existing);
     }
 }

@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.model.Bin;
 import com.example.demo.service.impl.BinServiceImpl;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController

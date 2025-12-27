@@ -9,7 +9,7 @@ import com.example.demo.model.OverflowPrediction;
 public interface OverflowPredictionRepository
         extends JpaRepository<OverflowPrediction, Long> {
 
-    List<OverflowPrediction> findByBinId(Long binId);
+    List<OverflowPrediction> findByBin_Id(Long binId);
 
-    List<OverflowPrediction> findByZoneIdOrderByPredictionTimeDesc(Long zoneId);
+    List<OverflowPrediction> findByZone_IdOrderByPredictionTimeDesc(Long zoneId);
 }

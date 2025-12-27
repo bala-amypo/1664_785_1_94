@@ -58,7 +58,6 @@
 //     }
 // }
 
-
 package com.example.demo.service.impl;
 
 import com.example.demo.model.UsagePatternModel;
@@ -79,7 +78,7 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
 
     @Override
     public UsagePatternModel createModel(UsagePatternModel model, Long binId) {
-        // No setBin() because it does NOT exist in entity
+        // No setId(), no setBin() – entity does not support them
         return repository.save(model);
     }
 
@@ -87,9 +86,15 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
     public UsagePatternModel updateModel(Long id, UsagePatternModel model) {
         UsagePatternModel existing = getUsagePatternModelById(id);
 
-        // Simply save updated model (no missing setters used)
-        model.setId(existing.getId());
-        return repository.save(model);
+        /*
+         Update ONLY the fields that actually exist
+         Example (keep or remove based on your entity fields):
+        */
+
+        existing.setLastUpdated(model.getLastUpdated());
+        existing.setPredictionAccuracy(model.getPredictionAccuracy());
+
+        return repository.save(existing);
     }
 
     @Override
@@ -101,7 +106,6 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
 
     @Override
     public UsagePatternModel getModelForBin(Long binId) {
-        // Repository returns entity directly, NOT Optional
         return repository.findTopByBinIdOrderByLastUpdatedDesc(binId);
     }
 

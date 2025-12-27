@@ -49,8 +49,7 @@ public class UsagePatternModelServiceImpl implements UsagePatternModelService {
 
     @Override
     public UsagePatternModel getModelForBin(Long binId) {
-        return usagePatternModelRepository
-                .findTopByBinIdOrderByLastUpdatedDesc(binId).orElseThrow(() -> new RuntimeException("No model found for bin id: " + binId));
+        return usagePatternModelRepository.findTopByBinIdOrderByLastUpdatedDesc(binId).orElseThrow(() -> new RuntimeException("No model found for bin id: " + binId));
     }
 
     @Override

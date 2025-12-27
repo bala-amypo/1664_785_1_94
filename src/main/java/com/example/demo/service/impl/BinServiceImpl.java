@@ -9,13 +9,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BinServiceImpl implements BinService {
+public class BinServiceImpl {
 
     private final BinRepository binRepository;
+    private final ZoneRepository zoneRepository;
 
-    public BinServiceImpl(BinRepository binRepository) {
+    public BinServiceImpl(BinRepository binRepository,
+                          ZoneRepository zoneRepository) {
         this.binRepository = binRepository;
+        this.zoneRepository = zoneRepository;
     }
+}
+
 
     @Override
     public Bin createBin(Bin bin) {

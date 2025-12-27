@@ -19,16 +19,29 @@ public class BinServiceImpl {
         this.zoneRepository = zoneRepository;
     }
 
-    public Bin save(Bin bin) {
+    public Bin createBin(Bin bin) {
         return binRepository.save(bin);
     }
 
-    public List<Bin> findAll() {
+    public Bin getBinById(Long id) {
+        return binRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bin not found"));
+    }
+
+    public List<Bin> getAllBins() {
         return binRepository.findAll();
     }
 
-    public Bin findById(Long id) {
-        return binRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bin not found"));
+    public Bin updateBin(Long id, Bin updated) {
+        Bin bin = getBinById(id);
+        bin.setName(updated.getName());
+        bin.setCapacity(updated.getCapacity());
+        return binRepository.save(bin);
+    }
+
+    public void deactivateBin(Long id) {
+        Bin bin = getBinById(id);
+        bin.setActive(false);
+        binRepository.save(bin);
     }
 }

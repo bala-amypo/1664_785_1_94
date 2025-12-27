@@ -66,7 +66,7 @@ public class Zone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String zoneName;   // ✅ added
+    private String zoneName;   
 
     private boolean active;    // ✅ added
 

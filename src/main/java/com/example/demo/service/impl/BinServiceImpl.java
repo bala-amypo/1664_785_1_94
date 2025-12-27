@@ -1,47 +1,41 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.Bin;
-import com.example.demo.repository.BinRepository;
-import com.example.demo.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BinServiceImpl {
 
-    private final BinRepository binRepository;
-    private final ZoneRepository zoneRepository;
-
-    public BinServiceImpl(BinRepository binRepository,
-                          ZoneRepository zoneRepository) {
-        this.binRepository = binRepository;
-        this.zoneRepository = zoneRepository;
-    }
+    private final Map<Long, Bin> bins = new HashMap<>();
+    private Long counter = 1L;
 
     public Bin createBin(Bin bin) {
-        return binRepository.save(bin);
+        bin.setActive(true);
+        bins.put(counter, bin);
+        bin.setName(bin.getName());
+        return bin;
     }
 
     public Bin getBinById(Long id) {
-        return binRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bin not found"));
+        return bins.get(id);
     }
 
     public List<Bin> getAllBins() {
-        return binRepository.findAll();
+        return new ArrayList<>(bins.values());
     }
 
     public Bin updateBin(Long id, Bin updated) {
-        Bin bin = getBinById(id);
-        bin.setName(updated.getName());
-        bin.setCapacity(updated.getCapacity());
-        return binRepository.save(bin);
+        Bin existing = bins.get(id);
+        if (existing != null) {
+            existing.setName(updated.getName());
+            existing.setCapacity(updated.getCapacity());
+        }
+        return existing;
     }
 
     public void deactivateBin(Long id) {
-        Bin bin = getBinById(id);
-        bin.setActive(false);
-        binRepository.save(bin);
+        Bin bin = bins.get(id);
+        if (bin != null) bin.setActive(false);
     }
 }

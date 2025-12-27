@@ -9,46 +9,21 @@ public class UsagePatternModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long binId;
-
     private double averageDailyIncrease;
-
     private LocalDateTime lastUpdated;
 
-    public UsagePatternModel() {
-    }
+    public UsagePatternModel() {}
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public Long getBinId() { return binId; }
+    public void setBinId(Long binId) { this.binId = binId; }
+    public double getAverageDailyIncrease() { return averageDailyIncrease; }
+    public void setAverageDailyIncrease(double averageDailyIncrease) { this.averageDailyIncrease = averageDailyIncrease; }
 
-    public Long getBinId() {
-        return binId;
-    }
+    // Required by your service
+    public double getAvgDailyIncreaseWeekday() { return averageDailyIncrease; }
 
-    public void setBinId(Long binId) {
-        this.binId = binId;
-    }
-
-    public double getAverageDailyIncrease() {
-        return averageDailyIncrease;
-    }
-
-    public void setAverageDailyIncrease(double averageDailyIncrease) {
-        this.averageDailyIncrease = averageDailyIncrease;
-    }
-
-    
-    public double getAvgDailyIncreaseWeekday() {
-        return averageDailyIncrease;
-    }
-
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
+    public LocalDateTime getLastUpdated() { return lastUpdated; }
+    public void setLastUpdated(LocalDateTime lastUpdated) { this.lastUpdated = lastUpdated; }
 }

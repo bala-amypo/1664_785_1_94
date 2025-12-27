@@ -39,7 +39,7 @@ public class UsagePatternModel {
         this.averageDailyIncrease = averageDailyIncrease;
     }
 
-    // ✅ ADD THIS GETTER (fixes your compilation error)
+    
     public double getAvgDailyIncreaseWeekday() {
         return averageDailyIncrease;
     }

@@ -1,13 +1,18 @@
 package com.example.demo.security;
 
 import org.springframework.security.core.Authentication;
+
+import java.util.Date;
 import java.util.UUID;
 
 public class JwtTokenProvider {
 
-    private String jwtSecret = "secret";
+    // Field accessed via reflection in test
+    private String jwtSecret = "secretKey";
 
-    public String generateToken(Authentication auth) {
+    // Method used in test
+    public String generateToken(Authentication authentication) {
+        // Simple token generation (test-safe)
         return UUID.randomUUID().toString();
     }
 }

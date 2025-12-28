@@ -1,9 +1,10 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Bin;
-import com.example.demo.model.Zone;
 import com.example.demo.repository.BinRepository;
 import com.example.demo.repository.ZoneRepository;
 import com.example.demo.service.BinService;
@@ -20,13 +21,25 @@ public class BinServiceImpl implements BinService {
         this.zoneRepository = zoneRepository;
     }
 
+    // CREATE
     @Override
-    public Bin createBin(Bin bin, Long zoneId) {
-        Zone zone = zoneRepository.findById(zoneId).orElse(null);
-        bin.setZone(zone);
+    public Bin createBin(Bin bin) {
         return binRepository.save(bin);
     }
 
+    // READ by ID
+    @Override
+    public Bin getBinById(Long id) {
+        return binRepository.findById(id).orElse(null);
+    }
+
+    // READ all
+    @Override
+    public List<Bin> getAllBins() {
+        return binRepository.findAll();
+    }
+
+    // UPDATE
     @Override
     public Bin updateBin(Long id, Bin update) {
         Bin existing = binRepository.findById(id).orElse(null);
@@ -41,6 +54,13 @@ public class BinServiceImpl implements BinService {
         return null;
     }
 
+    // DELETE
+    @Override
+    public void deleteBin(Long id) {
+        binRepository.deleteById(id);
+    }
+
+    // DEACTIVATE (for tests)
     @Override
     public void deactivateBin(long id) {
         Bin bin = binRepository.findById(id).orElse(null);

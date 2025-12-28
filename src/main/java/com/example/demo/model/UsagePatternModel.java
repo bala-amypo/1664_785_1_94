@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -11,18 +9,8 @@ public class UsagePatternModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String modelName;
-
-    private Double accuracy;
-
-    @Column(name = "last_updated")
-    private LocalDateTime lastUpdated;
-
-    @ManyToOne
-    @JoinColumn(name = "bin_id")
-    private Bin bin;
-
-    // getters & setters
+    private double avgDailyIncreaseWeekday;
+    private double avgDailyIncreaseWeekend;
 
     public Long getId() {
         return id;
@@ -32,35 +20,19 @@ public class UsagePatternModel {
         this.id = id;
     }
 
-    public String getModelName() {
-        return modelName;
+    public double getAvgDailyIncreaseWeekday() {
+        return avgDailyIncreaseWeekday;
     }
 
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
+    public void setAvgDailyIncreaseWeekday(double avgDailyIncreaseWeekday) {
+        this.avgDailyIncreaseWeekday = avgDailyIncreaseWeekday;
     }
 
-    public Double getAccuracy() {
-        return accuracy;
+    public double getAvgDailyIncreaseWeekend() {
+        return avgDailyIncreaseWeekend;
     }
 
-    public void setAccuracy(Double accuracy) {
-        this.accuracy = accuracy;
-    }
-
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
-    public Bin getBin() {
-        return bin;
-    }
-
-    public void setBin(Bin bin) {
-        this.bin = bin;
+    public void setAvgDailyIncreaseWeekend(double avgDailyIncreaseWeekend) {
+        this.avgDailyIncreaseWeekend = avgDailyIncreaseWeekend;
     }
 }

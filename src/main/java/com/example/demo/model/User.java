@@ -1,32 +1,32 @@
-package com.example.demo.model;
+// package com.example.demo.model;
 
-import jakarta.persistence.*;
+// import jakarta.persistence.*;
 
-@Entity
-@Table(name = "users")
-public class User {
+// @Entity
+// @Table(name = "users")
+// public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
 
-    private String fullName;
+//     private String fullName;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+//     @Column(unique = true, nullable = false)
+//     private String email;
 
-    private String password;
-    private String role;
+//     private String password;
+//     private String role;
 
-    public User() {}
+//     public User() {}
 
-    public User(String fullName, String email,
-                String password, String role) {
-        this.fullName = fullName;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
+//     public User(String fullName, String email,
+//                 String password, String role) {
+//         this.fullName = fullName;
+//         this.email = email;
+//         this.password = password;
+//         this.role = role;
+//     }
 
-    // getters and setters
-}
+//     // getters and setters
+// }

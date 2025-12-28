@@ -1,40 +1,40 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "overflow_predictions")
 public class OverflowPrediction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private LocalDate predictionDate;
+    private Double confidenceScore;
+    private int daysUntilFull;
+
     @ManyToOne
     private Bin bin;
 
-    private Date predictedFullDate;
-    private Integer daysUntilFull;
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    @ManyToOne
-    private UsagePatternModel modelUsed;
-
-    private Timestamp generatedAt;
-
-    public OverflowPrediction() {}
-
-    public OverflowPrediction(Bin bin, Date predictedFullDate,
-                              Integer daysUntilFull,
-                              UsagePatternModel modelUsed,
-                              Timestamp generatedAt) {
-        this.bin = bin;
-        this.predictedFullDate = predictedFullDate;
-        this.daysUntilFull = daysUntilFull;
-        this.modelUsed = modelUsed;
-        this.generatedAt = generatedAt;
+    public LocalDate getPredictionDate() { return predictionDate; }
+    public void setPredictionDate(LocalDate predictionDate) {
+        this.predictionDate = predictionDate;
     }
 
-    // getters and setters
+    public Double getConfidenceScore() { return confidenceScore; }
+    public void setConfidenceScore(Double confidenceScore) {
+        this.confidenceScore = confidenceScore;
+    }
+
+    public int getDaysUntilFull() { return daysUntilFull; }
+    public void setDaysUntilFull(int daysUntilFull) {
+        this.daysUntilFull = daysUntilFull;
+    }
+
+    public Bin getBin() { return bin; }
+    public void setBin(Bin bin) { this.bin = bin; }
 }

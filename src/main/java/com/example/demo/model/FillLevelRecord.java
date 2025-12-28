@@ -10,17 +10,22 @@ public class FillLevelRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double fillLevel;
+    private double fillPercentage;
+
     private LocalDateTime recordedAt;
 
     @ManyToOne
     private Bin bin;
 
+    // getters & setters
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Double getFillLevel() { return fillLevel; }
-    public void setFillLevel(Double fillLevel) { this.fillLevel = fillLevel; }
+    public double getFillPercentage() { return fillPercentage; }
+    public void setFillPercentage(double fillPercentage) {
+        this.fillPercentage = fillPercentage;
+    }
 
     public LocalDateTime getRecordedAt() { return recordedAt; }
     public void setRecordedAt(LocalDateTime recordedAt) {

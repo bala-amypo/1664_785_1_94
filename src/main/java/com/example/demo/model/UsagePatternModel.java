@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class UsagePatternModel {
@@ -10,25 +9,31 @@ public class UsagePatternModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String modelName;
-    private Double accuracy;
-    private LocalDateTime lastUpdated;
+    private double avgDailyIncreaseWeekday;
+    private double avgDailyIncreaseWeekend;
 
     @ManyToOne
     private Bin bin;
 
+    // getters & setters
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getModelName() { return modelName; }
-    public void setModelName(String modelName) { this.modelName = modelName; }
+    public double getAvgDailyIncreaseWeekday() {
+        return avgDailyIncreaseWeekday;
+    }
 
-    public Double getAccuracy() { return accuracy; }
-    public void setAccuracy(Double accuracy) { this.accuracy = accuracy; }
+    public void setAvgDailyIncreaseWeekday(double v) {
+        this.avgDailyIncreaseWeekday = v;
+    }
 
-    public LocalDateTime getLastUpdated() { return lastUpdated; }
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    public double getAvgDailyIncreaseWeekend() {
+        return avgDailyIncreaseWeekend;
+    }
+
+    public void setAvgDailyIncreaseWeekend(double v) {
+        this.avgDailyIncreaseWeekend = v;
     }
 
     public Bin getBin() { return bin; }

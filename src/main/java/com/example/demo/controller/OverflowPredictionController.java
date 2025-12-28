@@ -1,36 +1,39 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.OverflowPrediction;
-import com.example.demo.service.OverflowPredictionService;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.model.OverflowPrediction;
+import com.example.demo.service.OverflowPredictionService;
+
 @RestController
-@RequestMapping("/api/overflow-predictions")
+@RequestMapping("/api/predictions")
 public class OverflowPredictionController {
 
-    private final OverflowPredictionService overflowPredictionService;
+    private final OverflowPredictionService service;
 
-    public OverflowPredictionController(
-            OverflowPredictionService overflowPredictionService) {
-        this.overflowPredictionService = overflowPredictionService;
+    public OverflowPredictionController(OverflowPredictionService service) {
+        this.service = service;
     }
 
-    // CREATE OVERFLOW PREDICTION
     @PostMapping
-    public OverflowPrediction createPrediction(
-            @RequestBody OverflowPrediction prediction) {
-
-        return overflowPredictionService.createPrediction(prediction);
+    public OverflowPrediction create(@RequestBody OverflowPrediction prediction) {
+        return service.createPrediction(prediction);
     }
 
-    // GET LATEST PREDICTIONS FOR A ZONE
-    @GetMapping("/zone/{zoneId}")
-    public List<OverflowPrediction> getPredictionsForZone(
-            @PathVariable Long zoneId) {
+    @GetMapping
+    public List<OverflowPrediction> getAll() {
+        return service.getAllPredictions();
+    }
 
-        return overflowPredictionService
-                .getLatestPredictionsForZone(zoneId);
+    @GetMapping("/{id}")
+    public OverflowPrediction getById(@PathVariable Long id) {
+        return service.getPredictionById(id);
+    }
+
+    @GetMapping("/zone/{zoneId}")
+    public List<OverflowPrediction> getByZone(@PathVariable Long zoneId) {
+        return service.getLatestPredictionsForZone(zoneId);
     }
 }

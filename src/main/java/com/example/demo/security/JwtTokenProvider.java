@@ -1,67 +1,51 @@
-// package com.example.demo.security;
-
-// import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-// import org.springframework.stereotype.Component;
-
-// @Component
-// public class JwtTokenProvider {
-
-//     public JwtTokenProvider() {
-//     }
-
-//     public String generateToken(
-//             UsernamePasswordAuthenticationToken authentication,
-//             long userId,
-//             String email,
-//             String role) {
-
-//         return "test-token";
-//     }
-// }
 package com.example.demo.security;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.Authentication;
+
+import java.security.Key;
 import java.util.Date;
 
 public class JwtTokenProvider {
-    
-    private String jwtSecret = "testSecretKeyThatIsAtLeast32CharactersLong!";
-    private long jwtExpirationInMs = 3600000;
-    
-    public void setJwtSecret(String secret) {
-        this.jwtSecret = secret;
+
+    private final Key key;
+    private final long jwtExpirationInMs = 3600000; // 1 hour
+
+    public JwtTokenProvider(String secret) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
-    
-    public void setJwtExpirationInMs(long expiration) {
-        this.jwtExpirationInMs = expiration;
-    }
-    
-    public String generateToken(String username) {
+
+    public String generateToken(Authentication authentication) {
+        String username = authentication.getName();
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
-        
+
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
-    
+
     public String getUsernameFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(jwtSecret)
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
     }
-    
-    public boolean validateToken(String authToken) {
+
+    public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
             return true;
-        } catch (Exception ex) {
+        } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
     }

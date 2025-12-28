@@ -1,95 +1,80 @@
-// package com.example.demo.service.impl;
-
-// import org.springframework.stereotype.Service;
-// import com.example.demo.model.Bin;
-// import com.example.demo.repository.BinRepository;
-
-// import java.util.List;
-// import java.util.Optional;
-
-// @Service // Correct annotation for services
-// public class BinServiceImpl {
-
-//     private final BinRepository binRepository;
-
-//     public BinServiceImpl(BinRepository binRepository) {
-//         this.binRepository = binRepository;
-//     }
-
-//     public Bin createBin(Bin bin) {
-//         return binRepository.save(bin);
-//     }
-
-//     public Optional<Bin> getBinById(Long id) {
-//         return binRepository.findById(id);
-//     }
-
-//     public List<Bin> getAllBins() {
-//         return binRepository.findAll();
-//     }
-
-//     public Bin updateBin(Long id, Bin updated) {
-//         Bin existing = binRepository.findById(id)
-//                 .orElseThrow(() -> new RuntimeException("Bin not found"));
-//         existing.setName(updated.getName());
-//         existing.setCapacity(updated.getCapacity());
-//         return binRepository.save(existing);
-//     }
-
-//     public void deactivateBin(Long id) {
-//         Bin existing = binRepository.findById(id)
-//                 .orElseThrow(() -> new RuntimeException("Bin not found"));
-//         existing.setActive(false);
-//         binRepository.save(existing);
-//     }
-// }
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Bin;
+import com.example.demo.model.Zone;
 import com.example.demo.repository.BinRepository;
+import com.example.demo.repository.ZoneRepository;
 import com.example.demo.service.BinService;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 public class BinServiceImpl implements BinService {
-    
+
     private final BinRepository binRepository;
-    
-    public BinServiceImpl(BinRepository binRepository) {
+    private final ZoneRepository zoneRepository;
+
+    public BinServiceImpl(BinRepository binRepository,
+                          ZoneRepository zoneRepository) {
         this.binRepository = binRepository;
+        this.zoneRepository = zoneRepository;
     }
-    
+
     @Override
     public Bin createBin(Bin bin) {
+        if (bin.getCapacityLiters() == null || bin.getCapacityLiters() <= 0) {
+            throw new BadRequestException("capacity must be greater than 0");
+        }
+
+        binRepository.findByIdentifier(bin.getIdentifier())
+                .ifPresent(b -> {
+                    throw new BadRequestException("identifier already exists");
+                });
+
+        Zone zone = zoneRepository.findById(bin.getZone().getId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Zone not found"));
+
+        bin.setZone(zone);
+        bin.setActive(true);
+        bin.setCreatedAt(Timestamp.from(Instant.now()));
+        bin.setUpdatedAt(Timestamp.from(Instant.now()));
+
         return binRepository.save(bin);
     }
-    
+
+    @Override
+    public Bin updateBin(Long id, Bin updated) {
+        Bin bin = getBinById(id);
+
+        bin.setLocationDescription(updated.getLocationDescription());
+        bin.setLatitude(updated.getLatitude());
+        bin.setLongitude(updated.getLongitude());
+        bin.setCapacityLiters(updated.getCapacityLiters());
+        bin.setUpdatedAt(Timestamp.from(Instant.now()));
+
+        return binRepository.save(bin);
+    }
+
+    @Override
+    public Bin getBinById(Long id) {
+        return binRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Bin not found"));
+    }
+
     @Override
     public List<Bin> getAllBins() {
         return binRepository.findAll();
     }
-    
+
     @Override
-    public Optional<Bin> getBinById(Long id) {
-        return binRepository.findById(id);
-    }
-    
-    @Override
-    public Bin updateBinFillLevel(Long binId, Double newFillLevel) {
-        return binRepository.findById(binId).map(bin -> {
-            bin.setCurrentFillLevel(newFillLevel);
-            return binRepository.save(bin);
-        }).orElseThrow(() -> new RuntimeException("Bin not found"));
-    }
-    
-    @Override
-    public void deleteBin(Long id) {
-        binRepository.deleteById(id);
-    }
-    
-    @Override
-    public List<Bin> getBinsNeedingCollection() {
-        return binRepository.findByCurrentFillLevelGreaterThanEqual(80.0);
+    public void deactivateBin(Long id) {
+        Bin bin = getBinById(id);
+        bin.setActive(false);
+        binRepository.save(bin);
     }
 }

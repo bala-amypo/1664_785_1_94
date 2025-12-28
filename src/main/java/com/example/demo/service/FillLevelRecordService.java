@@ -6,9 +6,14 @@ import com.example.demo.model.FillLevelRecord;
 
 public interface FillLevelRecordService {
 
-    // CREATE (used by controller & tests)
-    FillLevelRecord createRecord(FillLevelRecord record);
+    // CREATE (used by controller)
+    FillLevelRecord createRecord(FillLevelRecord record, Long binId);
 
-    // READ recent records
-    List<FillLevelRecord> getRecentRecords(long binId, int limit);
+    // READ
+    List<FillLevelRecord> getAllRecords();
+
+    FillLevelRecord getRecordById(Long id);
+
+    // DELETE
+    void deleteRecord(Long id);
 }

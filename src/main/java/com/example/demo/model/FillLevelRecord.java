@@ -4,34 +4,68 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "fill_level_records")
 public class FillLevelRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double fillPercentage;
-
-    private LocalDateTime recordedAt;
-
     @ManyToOne
     private Bin bin;
 
-    // getters & setters
+    private Double fillPercentage;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // IMPORTANT: LocalDateTime (tests require this)
+    private LocalDateTime recordedAt;
 
-    public double getFillPercentage() { return fillPercentage; }
-    public void setFillPercentage(double fillPercentage) {
+    private Boolean isWeekend;
+
+    public FillLevelRecord() {}
+
+    public FillLevelRecord(Bin bin,
+                           Double fillPercentage,
+                           LocalDateTime recordedAt,
+                           Boolean isWeekend) {
+        this.bin = bin;
+        this.fillPercentage = fillPercentage;
+        this.recordedAt = recordedAt;
+        this.isWeekend = isWeekend;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Bin getBin() {
+        return bin;
+    }
+
+    public void setBin(Bin bin) {
+        this.bin = bin;
+    }
+
+    public Double getFillPercentage() {
+        return fillPercentage;
+    }
+
+    public void setFillPercentage(Double fillPercentage) {
         this.fillPercentage = fillPercentage;
     }
 
-    public LocalDateTime getRecordedAt() { return recordedAt; }
+    public LocalDateTime getRecordedAt() {
+        return recordedAt;
+    }
+
     public void setRecordedAt(LocalDateTime recordedAt) {
         this.recordedAt = recordedAt;
     }
 
-    public Bin getBin() { return bin; }
-    public void setBin(Bin bin) { this.bin = bin; }
+    public Boolean getIsWeekend() {
+        return isWeekend;
+    }
+
+    public void setIsWeekend(Boolean isWeekend) {
+        this.isWeekend = isWeekend;
+    }
 }

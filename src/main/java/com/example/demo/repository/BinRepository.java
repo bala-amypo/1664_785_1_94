@@ -1,16 +1,11 @@
+
 package com.example.demo.repository;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.example.demo.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.example.demo.model.Bin;
-import com.example.demo.model.Zone;
+import java.util.*;
 
 public interface BinRepository extends JpaRepository<Bin, Long> {
-
-    List<Bin> findByZoneAndActiveTrue(Zone zone);
-
     Optional<Bin> findByIdentifier(String identifier);
+    List<Bin> findByZoneAndActiveTrue(Zone zone);
 }

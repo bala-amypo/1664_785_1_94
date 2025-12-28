@@ -1,47 +1,35 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
-@Table(name = "bins")
 public class Bin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String identifier;
-
-    private String locationDescription;
-    private Double latitude;
-    private Double longitude;
+    private String location;
+    private Double capacity;
+    private Double currentFillLevel;
 
     @ManyToOne
     private Zone zone;
 
-    private Double capacityLiters;
-    private Boolean active;
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 
-    public Bin() {}
+    public Double getCapacity() { return capacity; }
+    public void setCapacity(Double capacity) { this.capacity = capacity; }
 
-    public Bin(String identifier, String locationDescription, Double latitude,
-               Double longitude, Zone zone, Double capacityLiters,
-               Boolean active, Timestamp createdAt, Timestamp updatedAt) {
-        this.identifier = identifier;
-        this.locationDescription = locationDescription;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.zone = zone;
-        this.capacityLiters = capacityLiters;
-        this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    public Double getCurrentFillLevel() { return currentFillLevel; }
+    public void setCurrentFillLevel(Double currentFillLevel) {
+        this.currentFillLevel = currentFillLevel;
     }
 
-    // getters and setters
+    public Zone getZone() { return zone; }
+    public void setZone(Zone zone) { this.zone = zone; }
 }

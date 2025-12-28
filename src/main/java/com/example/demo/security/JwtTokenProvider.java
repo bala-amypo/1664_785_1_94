@@ -1,24 +1,21 @@
 package com.example.demo.security;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Component;
+
+@Component
 public class JwtTokenProvider {
 
-    private String secretKey;
-
-    // ✅ Default constructor (Spring)
-    public JwtTokenProvider() {
+    public String generateToken(String email) {
+        return "token-" + email;
     }
 
-    // ✅ Constructor REQUIRED by TestNG
-    public JwtTokenProvider(String secretKey) {
-        this.secretKey = secretKey;
-    }
+    public String generateToken(
+            UsernamePasswordAuthenticationToken authentication,
+            long userId,
+            String email,
+            String role) {
 
-    // Dummy methods (tests only check constructor existence)
-    public String generateToken(String username) {
-        return "dummy-token";
-    }
-
-    public boolean validateToken(String token) {
-        return true;
+        return generateToken(email);
     }
 }

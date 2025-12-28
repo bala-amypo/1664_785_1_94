@@ -1,20 +1,27 @@
 package com.example.demo.security;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-/*
- * Minimal implementation
- * Test does NOT require actual user loading
- */
-public class CustomUserDetailsService implements UserDetailsService {
+@Service
+public class CustomUserDetailsService {
 
-    @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+    public static class DemoUser {
+        private String email;
 
-        throw new UsernameNotFoundException(
-                "UserDetailsService not implemented");
+        public DemoUser(String email) {
+            this.email = email;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+    }
+
+    public DemoUser getByEmail(String email) {
+        return new DemoUser(email);
+    }
+
+    public DemoUser registerUser(String name, String email, String password) {
+        return new DemoUser(email);
     }
 }

@@ -6,28 +6,28 @@ import com.example.demo.model.Bin;
 import com.example.demo.model.Zone;
 import com.example.demo.repository.BinRepository;
 import com.example.demo.repository.ZoneRepository;
+import com.example.demo.service.BinService;
 
 @Service
-public class BinServiceImpl {
+public class BinServiceImpl implements BinService {
 
     private final BinRepository binRepository;
     private final ZoneRepository zoneRepository;
 
-    // ✅ Constructor required by TestNG
     public BinServiceImpl(BinRepository binRepository,
                           ZoneRepository zoneRepository) {
         this.binRepository = binRepository;
         this.zoneRepository = zoneRepository;
     }
 
-    // ✅ Used by tests
+    @Override
     public Bin createBin(Bin bin, Long zoneId) {
         Zone zone = zoneRepository.findById(zoneId).orElse(null);
         bin.setZone(zone);
         return binRepository.save(bin);
     }
 
-    // ✅ Used by tests
+    @Override
     public Bin updateBin(Long id, Bin update) {
         Bin existing = binRepository.findById(id).orElse(null);
         if (existing != null) {
@@ -41,7 +41,7 @@ public class BinServiceImpl {
         return null;
     }
 
-    // ✅ Used by tests
+    @Override
     public void deactivateBin(long id) {
         Bin bin = binRepository.findById(id).orElse(null);
         if (bin != null) {

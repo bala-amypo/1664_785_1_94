@@ -1,19 +1,15 @@
 package com.example.demo.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.example.demo.model.UsagePatternModel;
+import java.util.List;
 
 public interface UsagePatternModelService {
 
-    UsagePatternModel createModel(UsagePatternModel model, Long binId);
+    UsagePatternModel createModel(UsagePatternModel model);
 
-    UsagePatternModel getModelById(Long id);
+    UsagePatternModel updateModel(Long id, UsagePatternModel model);
+
+    UsagePatternModel getModelForBin(Long binId);
 
     List<UsagePatternModel> getAllModels();
-
-    Optional<UsagePatternModel> getLatestModelForBin(Long binId);
-
-    void deleteModel(Long id);
 }

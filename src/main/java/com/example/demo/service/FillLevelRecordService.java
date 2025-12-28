@@ -1,20 +1,24 @@
 package com.example.demo.service;
 
+import com.example.demo.model.FillLevelRecord;
 import java.util.List;
 
-import com.example.demo.model.FillLevelRecord;
-
+/*
+ * File: FillLevelRecordService.java
+ * Package: com.example.demo.service
+ * Purpose: Service interface for FillLevelRecord
+ *
+ * NOTE:
+ * - Do NOT add @Service here
+ * - Spring injects the IMPLEMENTATION, not the interface
+ */
 public interface FillLevelRecordService {
 
-    // CREATE
     FillLevelRecord createRecord(FillLevelRecord record);
-    FillLevelRecord createRecord(FillLevelRecord record, Long binId);
 
-    // READ
-    List<FillLevelRecord> getAllRecords();
     FillLevelRecord getRecordById(Long id);
-    List<FillLevelRecord> getRecentRecords(long binId, int limit);
 
-    // DELETE
-    void deleteRecord(Long id);
+    List<FillLevelRecord> getRecordsForBin(Long binId);
+
+    List<FillLevelRecord> getRecentRecords(Long binId, int limit);
 }

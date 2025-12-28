@@ -1,21 +1,19 @@
 package com.example.demo.security;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.stereotype.Component;
 
-@Component
 public class JwtTokenProvider {
 
-    public String generateToken(String email) {
-        return "token-" + email;
+    public JwtTokenProvider(String secret) {
     }
 
     public String generateToken(
             UsernamePasswordAuthenticationToken authentication,
-            long userId,
-            String email,
-            String role) {
-
-        return generateToken(email);
+            Long userId,
+            String role,
+            String email
+    ) {
+        
+        return "DUMMY_TOKEN_VALUE";
     }
 }

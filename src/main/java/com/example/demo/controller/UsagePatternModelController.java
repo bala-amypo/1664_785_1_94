@@ -1,36 +1,36 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.UsagePatternModel;
-import com.example.demo.service.UsagePatternModelService;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import com.example.demo.model.UsagePatternModel;
+import com.example.demo.service.UsagePatternModelService;
 
 @RestController
-@RequestMapping("/api/usage-pattern-models")
+@RequestMapping("/api/models")
 public class UsagePatternModelController {
 
-    private final UsagePatternModelService usagePatternModelService;
+    private final UsagePatternModelService service;
 
-    public UsagePatternModelController(
-            UsagePatternModelService usagePatternModelService) {
-        this.usagePatternModelService = usagePatternModelService;
+    public UsagePatternModelController(UsagePatternModelService service) {
+        this.service = service;
     }
 
-    // CREATE MODEL FOR A BIN
     @PostMapping("/{binId}")
-    public UsagePatternModel createModel(
+    public UsagePatternModel create(
             @RequestBody UsagePatternModel model,
             @PathVariable Long binId) {
-
-        return usagePatternModelService.createModel(model, binId);
+        return service.createModel(model, binId);
     }
 
-    // GET LATEST MODEL FOR A BIN
-    @GetMapping("/latest/{binId}")
-    public Optional<UsagePatternModel> getLatestModel(
-            @PathVariable Long binId) {
+    @GetMapping
+    public List<UsagePatternModel> getAll() {
+        return service.getAllModels();
+    }
 
-        return usagePatternModelService.getLatestModelForBin(binId);
+    @GetMapping("/{id}")
+    public UsagePatternModel getById(@PathVariable Long id) {
+        return service.getModelById(id);
     }
 }

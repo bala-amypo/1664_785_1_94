@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -9,33 +11,56 @@ public class UsagePatternModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double avgDailyIncreaseWeekday;
-    private double avgDailyIncreaseWeekend;
+    private String modelName;
+
+    private Double accuracy;
+
+    @Column(name = "last_updated")
+    private LocalDateTime lastUpdated;
 
     @ManyToOne
+    @JoinColumn(name = "bin_id")
     private Bin bin;
 
     // getters & setters
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public double getAvgDailyIncreaseWeekday() {
-        return avgDailyIncreaseWeekday;
+    public Long getId() {
+        return id;
     }
 
-    public void setAvgDailyIncreaseWeekday(double v) {
-        this.avgDailyIncreaseWeekday = v;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public double getAvgDailyIncreaseWeekend() {
-        return avgDailyIncreaseWeekend;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setAvgDailyIncreaseWeekend(double v) {
-        this.avgDailyIncreaseWeekend = v;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
-    public Bin getBin() { return bin; }
-    public void setBin(Bin bin) { this.bin = bin; }
+    public Double getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(Double accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public Bin getBin() {
+        return bin;
+    }
+
+    public void setBin(Bin bin) {
+        this.bin = bin;
+    }
 }

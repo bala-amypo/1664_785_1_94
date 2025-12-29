@@ -11,7 +11,7 @@ public class DemoApplication {
 	}
 System.out.println(new BCryptPasswordEncoder().encode("madhavan2003"));
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		if(encoder.matches("madhavan2003","$2a$10$84t6DihfzZLffZ63YT..F.96t71zLuTeoqUL2tkssxTsRRw5ibcB2")){
+		if(encoder.matches("madhavan2003","")){
 			System.err.print("Password Matched");
 		}else{
 			System.out.print("Password Not Matched");
